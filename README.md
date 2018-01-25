@@ -23,6 +23,7 @@ Set the `GIN_MODE` environment variable to `release`
 
 # API spec
 
+```
 /api
     /mails
         /organisation : POST
@@ -38,3 +39,4 @@ Set the `GIN_MODE` environment variable to `release`
         /scores : CRUD
         /appel médecin : POST
         /enregistre faute : POST
+```
