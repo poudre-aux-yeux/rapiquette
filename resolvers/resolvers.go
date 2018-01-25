@@ -6,6 +6,11 @@ import (
 	"github.com/poudre-aux-yeux/rapiquette/raquette"
 )
 
+// NewRoot : TODO: link database
+func NewRoot() (*Resolver, error) {
+	return &Resolver{}, nil
+}
+
 // Resolver : default resolver
 type Resolver struct{}
 
