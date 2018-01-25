@@ -1,0 +1,34 @@
+type Match {
+    id: ID! @unique
+    date: Date!
+    stadium: Stadium!
+    referee: Referee!
+    players: [Player!]!
+    sets: [Set!]!
+    service: Boolean
+}
+
+type Player {
+    id: ID! @unique
+    name: String!
+}
+
+type Stadium {
+    id: ID! @unique
+    name: String!
+    city: String!
+}
+
+type RefereeTennis {
+    id: ID! @unique
+    name: String!
+}
+
+type Set {
+    games: [Game!]!
+}
+
+type Game {
+    homePoints: Int
+    awayPoints: Int
+}

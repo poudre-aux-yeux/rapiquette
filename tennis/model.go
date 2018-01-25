@@ -1,18 +1,25 @@
+// Package tennis contains the business models
 package tennis
+
+import (
+	"time"
+
+	graphql "github.com/neelance/graphql-go"
+)
 
 // Match : metadata about a match
 type Match struct {
-	ID      int       `json:"id"`
-	Players []*Player `json:"players"`
-	Std     *Stadium  `json:"stadium"`
-	Ref     *Referee  `json:"referee"`
+	ID      graphql.ID `json:"id"`
+	Players []*Player  `json:"players"`
+	Std     *Stadium   `json:"stadium"`
+	Ref     *Referee   `json:"referee"`
+	Date    time.Time  `json:"date"`
+	Score
 }
 
 // Score : current score of a match
 type Score struct {
-	MatchID int `json:"match_id"`
-	match   *Match
-	Sets    []*Set `json:"sets"`
+	Sets []*Set `json:"sets"`
 	// Service :
 	//   true => service to the team 1
 	//   false => service to the team 2
@@ -21,8 +28,8 @@ type Score struct {
 
 // Player : tennis player
 type Player struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   graphql.ID `json:"id"`
+	Name string     `json:"name"`
 }
 
 // Stadium : metadata about a stadium
@@ -34,8 +41,8 @@ type Stadium struct {
 
 // Referee : tennis referee
 type Referee struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   graphql.ID `json:"id"`
+	Name string     `json:"name"`
 }
 
 // Set : a set of games
@@ -45,6 +52,6 @@ type Set struct {
 
 // Game : Current points of a game
 type Game struct {
-	HomePoints uint32 `json:"home"`
-	AwayPoints uint32 `json:"away"`
+	HomePoints int `json:"home"`
+	AwayPoints int `json:"away"`
 }

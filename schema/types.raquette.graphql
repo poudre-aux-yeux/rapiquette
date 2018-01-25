@@ -1,0 +1,20 @@
+interface User {
+    id: ID! @unique
+    hash: String!
+    username: String! @unique
+    email: String! @unique
+}
+
+type Admin implements User {
+    id: ID! @unique
+    hash: String!
+    username: String! @unique
+    email: String! @unique
+}
+
+type RefereeRaquette implements User {
+    id: ID! @unique
+    hash: String!
+    username: String! @unique
+    email: String! @unique
+}
