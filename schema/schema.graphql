@@ -1,4 +1,4 @@
-scalar Date
+scalar Time
 
 schema {
     query: Query

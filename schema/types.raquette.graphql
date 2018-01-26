@@ -1,20 +1,20 @@
 interface User {
-    id: ID! @unique
+    id: ID!
     hash: String!
-    username: String! @unique
-    email: String! @unique
+    username: String!
+    email: String!
 }
 
 type Admin implements User {
-    id: ID! @unique
+    id: ID!
     hash: String!
-    username: String! @unique
-    email: String! @unique
+    username: String!
+    email: String!
 }
 
 type RefereeRaquette implements User {
-    id: ID! @unique
+    id: ID!
     hash: String!
-    username: String! @unique
-    email: String! @unique
+    username: String!
+    email: String!
 }

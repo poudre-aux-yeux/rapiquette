@@ -3,9 +3,9 @@ package main
 import "os"
 
 func main() {
-	server := Server{}
+	app := App{}
 
-	server.Initialize()
+	app.Initialize()
 
 	port := os.Getenv("PORT")
 
@@ -13,5 +13,5 @@ func main() {
 		port = "3333"
 	}
 
-	server.Run(":" + port)
+	app.Run(":" + port)
 }

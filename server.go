@@ -2,41 +2,67 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	"time"
 
-	"github.com/gin-gonic/gin"
 	graphql "github.com/neelance/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/handler"
 	"github.com/poudre-aux-yeux/rapiquette/resolvers"
 	"github.com/poudre-aux-yeux/rapiquette/schema"
 )
 
-// Server is the API for all our front-end applications
-type Server struct {
-	Router  *gin.Engine
+// App is the API for all our front-end applications
+type App struct {
+	Server  *http.Server
 	GraphQL handler.GraphQL
 }
 
-func (server *Server) initializeGraphQL() {
+func (app *App) initializeGraphQL() {
 	resolver, _ := resolvers.NewRoot()
-	server.GraphQL.Schema = graphql.MustParseSchema(schema.String(), resolver)
+	app.GraphQL.Schema = graphql.MustParseSchema(schema.String(), resolver)
 }
 
-func (server *Server) initializeRouter() {
-	server.Router = gin.Default()
+func (app *App) initializeServer() {
+	var (
+		readHeaderTimeout = 1 * time.Second
+		writeTimeout      = 10 * time.Second
+		idleTimeout       = 90 * time.Second
+		maxHeaderBytes    = http.DefaultMaxHeaderBytes
+	)
+
+	app.Server = &http.Server{
+		ReadHeaderTimeout: readHeaderTimeout,
+		WriteTimeout:      writeTimeout,
+		IdleTimeout:       idleTimeout,
+		MaxHeaderBytes:    maxHeaderBytes,
+	}
 }
 
-func (server *Server) initializeRoutes() {
-	server.Router.GET("/graphql")
+func (app *App) initializeRoutes() {
+	mux := http.NewServeMux()
+	mux.Handle("/", handler.GraphiQL{})
+	mux.Handle("/graphql", app.GraphQL)
+	mux.Handle("/graphql/", app.GraphQL)
+
+	app.Server.Handler = mux
 }
 
 // Initialize the application
-func (server *Server) Initialize() {
-	server.initializeGraphQL()
-	server.initializeRouter()
+func (app *App) Initialize() {
+	app.initializeGraphQL()
+	app.initializeServer()
+	app.initializeRoutes()
 }
 
 // Run the application
-func (server *Server) Run(addr string) {
-	server.Router.Run(addr)
+func (app *App) Run(addr string) {
+	app.Server.Addr = addr
 	fmt.Printf("API started at %s\n", addr)
+
+	if err := app.Server.ListenAndServe(); err != nil {
+		log.Println("app.ListenAndServe:", err)
+	}
+
+	fmt.Println("API shut down")
 }

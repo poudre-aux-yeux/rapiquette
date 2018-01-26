@@ -1,34 +1,36 @@
 type Match {
-    id: ID! @unique
-    date: Date!
+    id: ID!
+    date: Time!
     stadium: Stadium!
-    referee: Referee!
+    referee: RefereeTennis!
     players: [Player!]!
     sets: [Set!]!
     service: Boolean
 }
 
 type Player {
-    id: ID! @unique
+    id: ID!
     name: String!
 }
 
 type Stadium {
-    id: ID! @unique
+    id: ID!
     name: String!
     city: String!
 }
 
 type RefereeTennis {
-    id: ID! @unique
+    id: ID!
     name: String!
 }
 
 type Set {
+    id: ID!
     games: [Game!]!
 }
 
 type Game {
+    id: ID!
     homePoints: Int
     awayPoints: Int
 }

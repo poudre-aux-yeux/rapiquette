@@ -2,18 +2,16 @@
 package tennis
 
 import (
-	"time"
-
 	graphql "github.com/neelance/graphql-go"
 )
 
 // Match : metadata about a match
 type Match struct {
-	ID      graphql.ID `json:"id"`
-	Players []*Player  `json:"players"`
-	Std     *Stadium   `json:"stadium"`
-	Ref     *Referee   `json:"referee"`
-	Date    time.Time  `json:"date"`
+	ID      graphql.ID   `json:"id"`
+	Players []*Player    `json:"players"`
+	Std     *Stadium     `json:"stadium"`
+	Ref     *Referee     `json:"referee"`
+	Date    graphql.Time `json:"date"`
 	Score
 }
 
@@ -34,9 +32,10 @@ type Player struct {
 
 // Stadium : metadata about a stadium
 type Stadium struct {
-	GroundType string `json:"surface"`
-	Name       string `json:"name"`
-	City       string `json:"city"`
+	ID         graphql.ID `json:"id"`
+	GroundType string     `json:"surface"`
+	Name       string     `json:"name"`
+	City       string     `json:"city"`
 }
 
 // Referee : tennis referee
@@ -47,11 +46,13 @@ type Referee struct {
 
 // Set : a set of games
 type Set struct {
-	Games []*Game `json:"games"`
+	ID    graphql.ID `json:"id"`
+	Games []*Game    `json:"games"`
 }
 
 // Game : Current points of a game
 type Game struct {
-	HomePoints int `json:"home"`
-	AwayPoints int `json:"away"`
+	ID         graphql.ID `json:"id"`
+	HomePoints int32      `json:"home"`
+	AwayPoints int32      `json:"away"`
 }

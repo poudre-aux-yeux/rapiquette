@@ -1,4 +1,4 @@
 type Mutation {
-    createMatch(): Match
-    lancerMatch(): Match
+    createMatch(date: Time!, players: [ID!]!, referee: ID!): Match
+    startMatch(id: ID!): Match
 }

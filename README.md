@@ -13,6 +13,10 @@ GereMaRaquette : Application Web de gestion (back-office) des joueurs, terrains,
 
 ``` sh
 go get
+cd schema
+# bind the graphql schema together from all the parts
+go generate
+cd ..
 go build
 ./rapiquette
 ```
