@@ -25,22 +25,92 @@ go build
 
 Set the `GIN_MODE` environment variable to `release`
 
-# API spec
+# API
 
-```
-/api
-    /mails
-        /organisation : POST
-        /public : POST
-        /presse : POST
-    /users : CRUD
-    /terrains : CRUD
-    /arbitres : CRUD
-    /lieu : CRUD
-    /matches : GET
-        /:id : GET (socket)
-    /arbitrage
-        /scores : CRUD
-        /appel médecin : POST
-        /enregistre faute : POST
+GraphQL Schema :
+
+``` graphql
+scalar Time
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    matches(): [Match!]!
+    
+    admin(id: ID!): Admin
+    refereeRaquette(id: ID!): RefereeRaquette
+    
+    match(id: ID!): Match
+    player(id: ID!): Player
+    stadium(id: ID!): Stadium
+    refereeTennis(id: ID!): RefereeTennis
+    set(id: ID!): Set
+    game(id: ID!): Game
+}
+
+type Mutation {
+    createMatch(date: Time!, players: [ID!]!, referee: ID!): Match
+    startMatch(id: ID!): Match
+}
+
+interface User {
+    id: ID!
+    hash: String!
+    username: String!
+    email: String!
+}
+
+type Admin implements User {
+    id: ID!
+    hash: String!
+    username: String!
+    email: String!
+}
+
+type RefereeRaquette implements User {
+    id: ID!
+    hash: String!
+    username: String!
+    email: String!
+}
+
+type Match {
+    id: ID!
+    date: Time!
+    stadium: Stadium!
+    referee: RefereeTennis!
+    players: [Player!]!
+    sets: [Set!]!
+    service: Boolean
+}
+
+type Player {
+    id: ID!
+    name: String!
+}
+
+type Stadium {
+    id: ID!
+    name: String!
+    city: String!
+}
+
+type RefereeTennis {
+    id: ID!
+    name: String!
+}
+
+type Set {
+    id: ID!
+    games: [Game!]!
+}
+
+type Game {
+    id: ID!
+    homePoints: Int
+    awayPoints: Int
+}
 ```
