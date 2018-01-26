@@ -25,7 +25,7 @@ func (r *AdminResolver) Email() string {
 	return r.admin.Email
 }
 
-// PasswordHash : resolves the PasswordHash
-func (r *AdminResolver) PasswordHash() string {
+// Hash : resolves the PasswordHash
+func (r *AdminResolver) Hash() string {
 	return r.admin.PasswordHash
 }

@@ -1,3 +1,13 @@
 type Query {
     matches(): [Match!]!
+    
+    admin(id: ID!): Admin
+    refereeRaquette(id: ID!): RefereeRaquette
+    
+    match(id: ID!): Match
+    player(id: ID!): Player
+    stadium(id: ID!): Stadium
+    refereeTennis(id: ID!): RefereeTennis
+    set(id: ID!): Set
+    game(id: ID!): Game
 }
