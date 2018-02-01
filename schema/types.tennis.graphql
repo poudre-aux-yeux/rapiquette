@@ -1,36 +1,61 @@
+# A tennis match between 2 or 4 players
 type Match {
+    # The ID of the match
     id: ID!
+    # The time this match is set to happen
     date: Time!
+    # The stadium this match will happen in
     stadium: Stadium!
+    # The referee that will arbitrate this match
     referee: RefereeTennis!
+    # The players participating in this match (2 or 4 players)
     players: [Player!]!
+    # The score of this game
     sets: [Set!]!
+    # Who will serve next ? true = player 0, false = player 1
     service: Boolean
 }
 
+# A tennis player
 type Player {
+    # The ID of the player
     id: ID!
+    # The player's full name
     name: String!
 }
 
+# A tennis stadium
 type Stadium {
+    # The ID of the stadium
     id: ID!
+    # The stadium's name
     name: String!
+    # The city the stadium is located in
     city: String!
 }
 
+# A tennis referee
 type RefereeTennis {
+    # The ID of the tennis referee
     id: ID!
+    # The full name of the referee
     name: String!
 }
 
+# A set is gained by having at least 6 games and 2 over the opponent
 type Set {
+    # The ID of the set
     id: ID!
+    # All the games of this set
     games: [Game!]!
 }
 
+# A tennis game (NOT a tennis match !)
 type Game {
+    # The ID of the game
     id: ID!
+    # Points are just ints: 0, 1, 2, 3
     homePoints: Int
+    # Points are just ints: 0, 1, 2, 3
     awayPoints: Int
 }

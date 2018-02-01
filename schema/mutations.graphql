@@ -1,4 +1,6 @@
 type Mutation {
+    # Create a new match
     createMatch(date: Time!, players: [ID!]!, referee: ID!): Match
+    # Start a match
     startMatch(id: ID!): Match
 }

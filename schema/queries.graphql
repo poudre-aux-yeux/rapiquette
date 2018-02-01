@@ -1,4 +1,5 @@
 type Query {
+    # All matches
     matches(): [Match!]!
     
     admin(id: ID!): Admin
