@@ -14,13 +14,13 @@ func parse(r *http.Request) (request, error) {
 		return request{}, errors.New("Unable to read request body")
 	}
 
-	r.Body.Close()
+	defer r.Body.Close()
 
 	var req request
 
 	switch r.Method {
 	case "POST":
-		req = parsePost(body)
+		req, err = parsePost(body)
 	case "GET":
 		req = parseGet(r.URL.Query())
 	default:
@@ -77,9 +77,9 @@ func parseGet(v url.Values) request {
 }
 
 // TODO: err handling
-func parsePost(b []byte) request {
+func parsePost(b []byte) (request, error) {
 	if len(b) == 0 {
-		return request{}
+		return request{}, errors.New("the body is empty")
 	}
 
 	var queries []query
@@ -89,13 +89,16 @@ func parsePost(b []byte) request {
 	switch b[0] {
 	case '[':
 		isBatch = true
-		_ = json.Unmarshal(b, &queries)
+		if err := json.Unmarshal(b, &queries); err != nil {
+			return request{}, err
+		}
 	case '{':
 		q := query{}
 		if err := json.Unmarshal(b, &q); err != nil {
-			queries = append(queries, q)
+			return request{}, err
 		}
+		queries = append(queries, q)
 	}
 
-	return request{queries: queries, isBatch: isBatch}
+	return request{queries: queries, isBatch: isBatch}, nil
 }
