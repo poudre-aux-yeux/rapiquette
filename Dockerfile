@@ -11,6 +11,7 @@ FROM alpine
 
 WORKDIR /root/
 COPY --from=builder /go/src/github.com/poudre-aux-yeux/rapiquette/rapiquette .
+ENV GIN_MODE release
 CMD ["./rapiquette"]
 
 EXPOSE 3333

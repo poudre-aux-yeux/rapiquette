@@ -14,15 +14,22 @@ GereMaRaquette : Application Web de gestion (back-office) des joueurs, terrains,
 # Getting started
 
 ``` sh
+# Install the dependencies
 go get
-# On Windows' cmd.exe, omit the './'
+# Install go generate
+go get -u github.com/jteeuwen/go-bindata/...
+# If using cmd.exe, omit the './'
 ./build.sh
+# Run the executable
 ./rapiquette
 ```
 
 # Deploy
 
 Set the `GIN_MODE` environment variable to `release`
+Set the `REDIS_HOST` environment variable to your Redis location
+
+Or just run docker compose up
 
 # API
 

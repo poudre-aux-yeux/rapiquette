@@ -1,0 +1,19 @@
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+      - "3333:3333"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+  
+  redis:
+    image: redis
+    hostname: redis
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
