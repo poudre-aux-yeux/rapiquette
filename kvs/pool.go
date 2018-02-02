@@ -2,19 +2,28 @@ package kvs
 
 import (
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/garyburd/redigo/redis"
 )
 
-// NewRedisPool inits the redis connection and returns a Pool
-func NewRedisPool() *redis.Pool {
-	host := os.Getenv("REDIS_HOST")
-	if host == "" {
-		host = ":6379"
+// Redis : Redis instance
+type Redis struct {
+	Pool *redis.Pool
+}
+
+// NewRedis instantiates a new RedisPool
+func NewRedis(host string) *Redis {
+	pool := newPool(host)
+
+	r := Redis{
+		Pool: pool,
 	}
-	defer cleanupHook()
-	return newPool(host)
+
+	r.cleanupHook()
+	return &r
 }
 
 func newPool(host string) *redis.Pool {
@@ -33,4 +42,17 @@ func newPool(host string) *redis.Pool {
 		Dial:         dial,
 		TestOnBorrow: testOnBorrow,
 	}
+}
+
+// Intercept the exit signal and close the pool properly before exiting
+func (rd *Redis) cleanupHook() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, syscall.SIGTERM)
+	signal.Notify(c, syscall.SIGKILL)
+	go func() {
+		<-c
+		rd.Pool.Close()
+		os.Exit(0)
+	}()
 }

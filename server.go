@@ -5,14 +5,11 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	graphql "github.com/neelance/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/handler"
 	"github.com/poudre-aux-yeux/rapiquette/kvs"
-	"github.com/poudre-aux-yeux/rapiquette/redis"
 	"github.com/poudre-aux-yeux/rapiquette/resolvers"
 	"github.com/poudre-aux-yeux/rapiquette/schema"
 )
@@ -21,7 +18,7 @@ import (
 type App struct {
 	Server  *http.Server
 	GraphQL handler.GraphQL
-	Pool    *redis.Pool
+	Redis   *kvs.Redis
 }
 
 func (app *App) initializeGraphQL() {
@@ -55,26 +52,11 @@ func (app *App) initializeRoutes() {
 }
 
 func (app *App) initializeKeyValueStore() {
-
 	host := os.Getenv("REDIS_HOST")
 	if host == "" {
 		host = ":6379"
 	}
-	defer cleanupHook()
-	app.Pool = kvs.NewPool(host)
-}
-
-// Intercept the exit signal and close the pool properly before exiting
-func cleanupHook() {
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	signal.Notify(c, syscall.SIGTERM)
-	signal.Notify(c, syscall.SIGKILL)
-	go func() {
-		<-c
-		Pool.Close()
-		os.Exit(0)
-	}()
+	app.Redis = kvs.NewRedis(host)
 }
 
 // Initialize the application

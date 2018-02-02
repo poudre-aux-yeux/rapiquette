@@ -7,8 +7,8 @@ import (
 )
 
 // Ping will return nil if everything is OK or an error
-func Ping() error {
-	conn := Pool.Get()
+func (rd *Redis) Ping() error {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	if _, err := redis.String(conn.Do("PING")); err != nil {
@@ -18,8 +18,8 @@ func Ping() error {
 }
 
 // Get some value by its key
-func Get(key string) ([]byte, error) {
-	conn := Pool.Get()
+func (rd *Redis) Get(key string) ([]byte, error) {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	var data []byte
@@ -31,8 +31,8 @@ func Get(key string) ([]byte, error) {
 }
 
 // Set some value by its key
-func Set(key string, value []byte) error {
-	conn := Pool.Get()
+func (rd *Redis) Set(key string, value []byte) error {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	_, err := conn.Do("SET", key, value)
@@ -47,8 +47,8 @@ func Set(key string, value []byte) error {
 }
 
 // Exists will return true if an item exists
-func Exists(key string) (bool, error) {
-	conn := Pool.Get()
+func (rd *Redis)Exists(key string) (bool, error) {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	ok, err := redis.Bool(conn.Do("EXISTS", key))
@@ -59,8 +59,8 @@ func Exists(key string) (bool, error) {
 }
 
 // Delete will remove an item by its key
-func Delete(key string) error {
-	conn := Pool.Get()
+func (rd *Redis) Delete(key string) error {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	_, err := conn.Do("DEL", key)
@@ -68,8 +68,8 @@ func Delete(key string) error {
 }
 
 // GetKeys will return all the keys
-func GetKeys(pattern string) ([]string, error) {
-	conn := Pool.Get()
+func (rd *Redis) GetKeys(pattern string) ([]string, error) {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	iter := 0
@@ -93,8 +93,8 @@ func GetKeys(pattern string) ([]string, error) {
 }
 
 // Incr will ... increment a counter ? tbd
-func Incr(counterKey string) (int, error) {
-	conn := Pool.Get()
+func (rd *Redis) Incr(counterKey string) (int, error) {
+	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	return redis.Int(conn.Do("INCR", counterKey))
