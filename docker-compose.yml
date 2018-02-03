@@ -5,15 +5,23 @@ services:
     ports:
       - "3333:3333"
     environment:
-      - REDIS_HOST=redis
+      - RAQUETTE_HOST=raquettekvs
+      - TENNIS_HOST=tenniskvs
     depends_on:
       - redis
   
-  redis:
+  tennis-redis:
     image: redis
-    hostname: redis
+    hostname: tenniskvs
     volumes:
-      - redis-data:/data
+      - tennis-data:/data
+  
+  raquette-redis:
+    image: redis
+    hostname: raquettekvs
+    volumes:
+      - raquette-data:/data
 
 volumes:
-  redis-data:
+  tennis-data:
+  raquette-data:

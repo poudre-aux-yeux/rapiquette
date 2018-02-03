@@ -18,7 +18,13 @@ func (r *RootResolver) Matches() []*MatchResolver {
 
 // Match : resolves the Match query
 func (r *RootResolver) Match(args *queryArgs) *MatchResolver {
-	match := tennis.Match{}
+	match, err := r.tennis.GetMatch(args.ID)
+
+	if err != nil {
+		// TODO : return an error
+		return &MatchResolver{}
+	}
+
 	return &MatchResolver{match: match}
 }
 
