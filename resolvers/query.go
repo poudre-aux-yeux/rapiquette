@@ -2,6 +2,8 @@
 package resolvers
 
 import (
+	"context"
+
 	graphql "github.com/neelance/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/raquette"
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
@@ -13,12 +15,25 @@ type queryArgs struct {
 
 // Matches : resolves the Matches query
 func (r *RootResolver) Matches() []*MatchResolver {
-	return make([]*MatchResolver, 0)
+	matches, err := r.tennis.GetAllMatches()
+
+	if err != nil {
+		// TODO : return an error
+		return make([]*MatchResolver, 0)
+	}
+
+	resolvers := make([]*MatchResolver, len(matches))
+
+	for i, match := range matches {
+		resolvers[i] = &MatchResolver{match: match}
+	}
+
+	return resolvers
 }
 
 // Match : resolves the Match query
 func (r *RootResolver) Match(args *queryArgs) *MatchResolver {
-	match, err := r.tennis.GetMatch(args.ID)
+	match, err := r.tennis.GetMatchByID(args.ID)
 
 	if err != nil {
 		// TODO : return an error
@@ -28,10 +43,32 @@ func (r *RootResolver) Match(args *queryArgs) *MatchResolver {
 	return &MatchResolver{match: match}
 }
 
+// Players : resolves the Players query
+func (r *RootResolver) Players(ctx context.Context) ([]*PlayerResolver, error) {
+	players, err := r.tennis.GetAllPlayers()
+
+	if err != nil {
+		return nil, err
+	}
+
+	resolvers := make([]*PlayerResolver, len(players))
+
+	for i, player := range players {
+		resolvers[i] = &PlayerResolver{player: player}
+	}
+
+	return resolvers, nil
+}
+
 // Player : resolves the Player query
-func (r *RootResolver) Player(args *queryArgs) *PlayerResolver {
-	player := tennis.Player{}
-	return &PlayerResolver{player: player}
+func (r *RootResolver) Player(ctx context.Context, args *queryArgs) (*PlayerResolver, error) {
+	player, err := r.tennis.GetPlayerByID(args.ID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &PlayerResolver{player: player}, nil
 }
 
 // Stadium : resolves the Stadium query

@@ -1,6 +1,7 @@
 type Query {
     # All matches
     matches(): [Match!]!
+    players(): [Player!]!
     
     admin(id: ID!): Admin
     refereeRaquette(id: ID!): RefereeRaquette

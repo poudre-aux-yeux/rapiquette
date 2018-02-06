@@ -6,22 +6,33 @@ services:
       - "3333:3333"
     environment:
       - RAQUETTE_HOST=raquettekvs
-      - TENNIS_HOST=tenniskvs
+      - TENNIS_HOST=tennis-redis:6379
+    # networks:
+    #   - tennis-network
     depends_on:
-      - redis
+      - tennis-redis
+      # - raquette-redis
   
   tennis-redis:
-    image: redis
-    hostname: tenniskvs
+    image: redis:4.0.5-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: tennis-redis
+    ports:
+      - "6379:6379"
+    # networks:
+    #   - tennis-network
     volumes:
       - tennis-data:/data
   
-  raquette-redis:
-    image: redis
-    hostname: raquettekvs
-    volumes:
-      - raquette-data:/data
+  # raquette-redis:
+  #   image: redis
+  #   hostname: raquettekvs
+  #   volumes:
+  #     - raquette-data:/data
+
+# networks:
+#   tennis-network:
 
 volumes:
   tennis-data:
-  raquette-data:
+  # raquette-data:

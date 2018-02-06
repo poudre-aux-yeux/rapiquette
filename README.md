@@ -33,7 +33,7 @@ Or just run docker compose up
 
 # API
 
-GraphQL Schema :
+GraphQL Schema:
 
 ``` graphql
 scalar Time
@@ -118,5 +118,60 @@ type Game {
     id: ID!
     homePoints: Int
     awayPoints: Int
+}
+```
+
+# Consume the API
+
+## Mutations
+
+Create a new player, with the following query:
+
+``` graphql
+mutation CreateNewPlayer($player: CreatePlayerInput!) {
+  createPlayer(player: $player) {
+    id
+    name
+  }
+}
+```
+
+and the Query Variables:
+
+``` graphql
+{
+    "player": {
+        "name": "Thomasauvajon"
+    }
+}
+```
+
+You can then query the players:
+
+``` graphql
+query {
+  players {
+    name
+    id
+  }
+}
+```
+
+or a particular player:
+
+``` graphql
+query GetPlayerByID($id: ID!) {
+  player(id: $id) {
+    id
+    name
+  }
+}
+```
+
+with the Query Variables:
+
+``` graphql
+{
+  	"id": "10Abbwj2Zg8sETDPUq99I52FiuA"
 }
 ```

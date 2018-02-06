@@ -3,4 +3,11 @@ type Mutation {
     createMatch(date: Time!, players: [ID!]!, referee: ID!): Match
     # Start a match
     startMatch(id: ID!): Match
+    # Create a new player
+    createPlayer(player: CreatePlayerInput!): Player
+}
+
+input CreatePlayerInput {    
+    # The player's full name
+    name: String!
 }

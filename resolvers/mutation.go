@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	graphql "github.com/neelance/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
 )
@@ -10,12 +12,15 @@ type createMatchArgs struct {
 	Players []graphql.ID
 	Referee graphql.ID
 }
+type createPlayerArgs struct {
+	Player tennis.Player
+}
 type startMatchArgs struct {
 	ID graphql.ID
 }
 
 // CreateMatch : mutation to create a match
-func (r *RootResolver) CreateMatch(args *createMatchArgs) *MatchResolver {
+func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (*MatchResolver, error) {
 	ref := tennis.Referee{ID: args.Referee}
 	players := make([]*tennis.Player, len(args.Players))
 
@@ -24,13 +29,22 @@ func (r *RootResolver) CreateMatch(args *createMatchArgs) *MatchResolver {
 		players[i] = &player
 	}
 
-	match := tennis.Match{
+	m := tennis.Match{
 		Date:    args.Date,
 		Ref:     &ref,
 		Players: players,
 	}
-	// insert in db
-	return &MatchResolver{match: match}
+
+	match, err := r.tennis.CreateMatch(m)
+
+	return &MatchResolver{match: match}, err
+}
+
+// CreatePlayer creates a new Player and returns it
+func (r *RootResolver) CreatePlayer(ctx context.Context, args *createPlayerArgs) (*PlayerResolver, error) {
+	player, err := r.tennis.CreatePlayer(args.Player)
+
+	return &PlayerResolver{player: player}, err
 }
 
 // StartMatch : starts a match

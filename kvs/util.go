@@ -2,6 +2,7 @@ package kvs
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/garyburd/redigo/redis"
 )
@@ -46,8 +47,22 @@ func (rd *Redis) Set(key string, value []byte) error {
 	return err
 }
 
+// AddToSet will add keys to a set
+func (rd *Redis) AddToSet(set string, keys ...interface{}) error {
+	conn := rd.Pool.Get()
+	defer conn.Close()
+
+	_, err := conn.Do("SADD", set, keys)
+
+	if err != nil {
+		return fmt.Errorf("error adding keys to set %s: %v", set, err)
+	}
+
+	return err
+}
+
 // Exists will return true if an item exists
-func (rd *Redis)Exists(key string) (bool, error) {
+func (rd *Redis) Exists(key string) (bool, error) {
 	conn := rd.Pool.Get()
 	defer conn.Close()
 
@@ -92,10 +107,36 @@ func (rd *Redis) GetKeys(pattern string) ([]string, error) {
 	return keys, nil
 }
 
+// GetSetMembers will return all the keys in a set
+func (rd *Redis) GetSetMembers(set string) ([]string, error) {
+	conn := rd.Pool.Get()
+	defer conn.Close()
+
+	arr, err := redis.Values(conn.Do("SMEMBERS", set))
+	if err != nil {
+		return nil, fmt.Errorf("error retrieving the keys from the set '%v': %v", set, err)
+	}
+
+	keys, err := redis.Strings(arr, nil)
+
+	// The keys are surrounded by [ ], we need to trim them
+	for i, k := range keys {
+		keys[i] = trimBrackets(k)
+	}
+
+	return keys, err
+}
+
 // Incr will ... increment a counter ? tbd
 func (rd *Redis) Incr(counterKey string) (int, error) {
 	conn := rd.Pool.Get()
 	defer conn.Close()
 
 	return redis.Int(conn.Do("INCR", counterKey))
+}
+
+func trimBrackets(s string) string {
+	trimmed := strings.Trim(s, "[")
+	trimmed = strings.Trim(trimmed, "]")
+	return trimmed
 }

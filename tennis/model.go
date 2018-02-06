@@ -15,6 +15,13 @@ type Match struct {
 	Score
 }
 
+func matchType() string {
+	return "Match"
+}
+func playerType() string {
+	return "Player"
+}
+
 // Score : current score of a match
 type Score struct {
 	Sets []*Set `json:"sets"`
