@@ -8,9 +8,10 @@ import (
 )
 
 type createMatchArgs struct {
-	Date    graphql.Time
-	Players []graphql.ID
-	Referee graphql.ID
+	Date         graphql.Time
+	PlayersLinks []graphql.ID
+	RefereeLink  graphql.ID
+	StadiumLink  graphql.ID
 }
 type createPlayerArgs struct {
 	Player tennis.Player
@@ -21,18 +22,11 @@ type startMatchArgs struct {
 
 // CreateMatch : mutation to create a match
 func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (*MatchResolver, error) {
-	ref := tennis.Referee{ID: args.Referee}
-	players := make([]*tennis.Player, len(args.Players))
-
-	for i, p := range args.Players {
-		player := tennis.Player{ID: p}
-		players[i] = &player
-	}
-
 	m := tennis.Match{
-		Date:    args.Date,
-		Ref:     &ref,
-		Players: players,
+		Date:         args.Date,
+		RefLink:      args.RefereeLink,
+		PlayersLinks: args.PlayersLinks,
+		StdLink:      args.StadiumLink,
 	}
 
 	match, err := r.tennis.CreateMatch(m)

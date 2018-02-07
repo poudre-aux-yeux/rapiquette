@@ -14,12 +14,11 @@ type queryArgs struct {
 }
 
 // Matches : resolves the Matches query
-func (r *RootResolver) Matches() []*MatchResolver {
+func (r *RootResolver) Matches(ctx context.Context) ([]*MatchResolver, error) {
 	matches, err := r.tennis.GetAllMatches()
 
 	if err != nil {
-		// TODO : return an error
-		return make([]*MatchResolver, 0)
+		return nil, err
 	}
 
 	resolvers := make([]*MatchResolver, len(matches))
@@ -28,19 +27,18 @@ func (r *RootResolver) Matches() []*MatchResolver {
 		resolvers[i] = &MatchResolver{match: match}
 	}
 
-	return resolvers
+	return resolvers, nil
 }
 
 // Match : resolves the Match query
-func (r *RootResolver) Match(args *queryArgs) *MatchResolver {
+func (r *RootResolver) Match(ctx context.Context, args *queryArgs) (*MatchResolver, error) {
 	match, err := r.tennis.GetMatchByID(args.ID)
 
 	if err != nil {
-		// TODO : return an error
-		return &MatchResolver{}
+		return nil, err
 	}
 
-	return &MatchResolver{match: match}
+	return &MatchResolver{match: match}, nil
 }
 
 // Players : resolves the Players query

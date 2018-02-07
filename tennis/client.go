@@ -30,7 +30,8 @@ func New(redis *kvs.Redis) (*Client, error) {
 
 // GetAllMatches : Return every match
 func (c Client) GetAllMatches() ([]Match, error) {
-	keys, err := c.redis.GetSetMembers(matchType())
+	var match Match
+	keys, err := c.redis.GetSetMembers(match.GetType())
 
 	if err != nil {
 		return nil, err
@@ -53,7 +54,8 @@ func (c Client) GetAllMatches() ([]Match, error) {
 
 // GetAllPlayers : Return every player
 func (c Client) GetAllPlayers() ([]Player, error) {
-	keys, err := c.redis.GetSetMembers(playerType())
+	var player Player
+	keys, err := c.redis.GetSetMembers(player.GetType())
 
 	if err != nil {
 		return nil, err
@@ -113,7 +115,7 @@ func (c Client) CreateMatch(m Match) (Match, error) {
 	id := generateID()
 	m.ID = graphql.ID(id)
 
-	return m, c.Create(m, id, matchType())
+	return m, c.Create(m, id, m.GetType())
 }
 
 // CreatePlayer adds a player to the key-value store
@@ -121,7 +123,7 @@ func (c Client) CreatePlayer(p Player) (Player, error) {
 	id := generateID()
 	p.ID = graphql.ID(id)
 
-	return p, c.Create(p, id, playerType())
+	return p, c.Create(p, id, p.GetType())
 }
 
 // Create adds an item to the key-value store

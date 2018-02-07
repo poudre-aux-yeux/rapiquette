@@ -23,21 +23,25 @@ func (r *MatchResolver) Date() graphql.Time {
 
 // Players : resolves the players
 func (r *MatchResolver) Players() []*PlayerResolver {
+	// TODO get the players
 	return make([]*PlayerResolver, 0)
 }
 
 // Referee : resolves the tennis Referee
 func (r *MatchResolver) Referee() *TennisRefereeResolver {
+	// TODO get the ref
 	return &TennisRefereeResolver{}
 }
 
 // Stadium : resolves the Stadium
 func (r *MatchResolver) Stadium() *StadiumResolver {
+	// TODO get the stadium
 	return &StadiumResolver{}
 }
 
 // Sets : resolves the sets
 func (r *MatchResolver) Sets() []*SetResolver {
+	// Todo get the sets
 	return make([]*SetResolver, 0)
 }
 

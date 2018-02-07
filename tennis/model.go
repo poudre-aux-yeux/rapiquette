@@ -7,19 +7,20 @@ import (
 
 // Match : metadata about a match
 type Match struct {
-	ID      graphql.ID   `json:"id"`
-	Players []*Player    `json:"players"`
-	Std     *Stadium     `json:"stadium"`
-	Ref     *Referee     `json:"referee"`
-	Date    graphql.Time `json:"date"`
+	ID           graphql.ID   `json:"id"`
+	Players      []*Player    `json:"players"`
+	PlayersLinks []graphql.ID `json:"playersLink"`
+	Std          *Stadium     `json:"stadium"`
+	StdLink      graphql.ID   `json:"stadiumLink"`
+	Ref          *Referee     `json:"referee"`
+	RefLink      graphql.ID   `json:"refereeLink"`
+	Date         graphql.Time `json:"date"`
 	Score
 }
 
-func matchType() string {
+// GetType returns the type of the struct
+func (s *Match) GetType() string {
 	return "Match"
-}
-func playerType() string {
-	return "Player"
 }
 
 // Score : current score of a match
@@ -35,6 +36,11 @@ type Score struct {
 type Player struct {
 	ID   graphql.ID `json:"id"`
 	Name string     `json:"name"`
+}
+
+// GetType returns the type of the struct
+func (s *Player) GetType() string {
+	return "Player"
 }
 
 // Stadium : metadata about a stadium

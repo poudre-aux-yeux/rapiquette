@@ -7,7 +7,20 @@ type Mutation {
     createPlayer(player: CreatePlayerInput!): Player
 }
 
+# Input required to create a new player
 input CreatePlayerInput {    
     # The player's full name
     name: String!
+}
+
+# Input required to create a new match
+input CreateMatchInput {
+    # The datetime when the match will take place
+	Date: Time!
+    # The IDs of all the opponents
+    PlayersLinks: [ID!]!
+    # The ID of the referee who will arbitrate the match
+    RefereeLink: ID!
+    # The ID of the stadium where the match will be played
+    StadiumLink: ID!
 }
