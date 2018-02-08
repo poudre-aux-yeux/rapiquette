@@ -5,11 +5,19 @@ type Mutation {
     startMatch(id: ID!): Match
     # Create a new player
     createPlayer(player: CreatePlayerInput!): Player
+    # Create a new tennis referee
+    createTennisReferee(referee: CreateTennisRefereeInput!): TennisReferee
 }
 
 # Input required to create a new player
-input CreatePlayerInput {    
+input CreatePlayerInput {
     # The player's full name
+    name: String!
+}
+
+# Input required to create a new tennis referee
+input CreateTennisRefereeInput {
+    # The referee's full name
     name: String!
 }
 

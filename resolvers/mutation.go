@@ -17,6 +17,12 @@ type createMatchArgs struct {
 type createPlayerArgs struct {
 	Player tennis.Player
 }
+type createTennisRefereeArgs struct {
+	Referee tennis.Referee
+}
+type createStadiumArgs struct {
+	Stadium tennis.Stadium
+}
 type startMatchArgs struct {
 	ID graphql.ID
 }
@@ -41,6 +47,20 @@ func (r *RootResolver) CreatePlayer(ctx context.Context, args *createPlayerArgs)
 	player, err := r.tennis.CreatePlayer(args.Player)
 
 	return &PlayerResolver{player: player}, err
+}
+
+// CreateTennisReferee creates a new Referee and returns it
+func (r *RootResolver) CreateTennisReferee(ctx context.Context, args *createTennisRefereeArgs) (*TennisRefereeResolver, error) {
+	ref, err := r.tennis.CreateReferee(args.Referee)
+
+	return &TennisRefereeResolver{ref: ref}, err
+}
+
+// CreateStadium creates a new Stadium and returns it
+func (r *RootResolver) CreateStadium(ctx context.Context, args *createStadiumArgs) (*StadiumResolver, error) {
+	stadium, err := r.tennis.CreateStadium(args.Stadium)
+
+	return &StadiumResolver{stadium: stadium}, err
 }
 
 // StartMatch : starts a match

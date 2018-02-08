@@ -62,11 +62,7 @@ func (r *RootResolver) Players(ctx context.Context) ([]*PlayerResolver, error) {
 func (r *RootResolver) Player(ctx context.Context, args *queryArgs) (*PlayerResolver, error) {
 	player, err := r.tennis.GetPlayerByID(args.ID)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return &PlayerResolver{player: player}, nil
+	return &PlayerResolver{player: player}, err
 }
 
 // Stadium : resolves the Stadium query
@@ -76,9 +72,9 @@ func (r *RootResolver) Stadium(args *queryArgs) *StadiumResolver {
 }
 
 // RefereeTennis : resolves the RefereeTennis query
-func (r *RootResolver) RefereeTennis(args *queryArgs) *TennisRefereeResolver {
-	ref := tennis.Referee{}
-	return &TennisRefereeResolver{ref: ref}
+func (r *RootResolver) RefereeTennis(ctx context.Context, args *queryArgs) (*TennisRefereeResolver, error) {
+	ref, err := r.tennis.GetRefereeByID(args.ID)
+	return &TennisRefereeResolver{ref: ref}, err
 }
 
 // Set : resolves the Set query

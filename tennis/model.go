@@ -25,6 +25,21 @@ func (s *Match) GetType() string {
 	return "Match"
 }
 
+// GetType returns the type of the struct
+func (s *Player) GetType() string {
+	return "Player"
+}
+
+// GetType returns the type of the struct
+func (s *Referee) GetType() string {
+	return "TennisReferee"
+}
+
+// GetType returns the type of the struct
+func (s *Stadium) GetType() string {
+	return "Stadium"
+}
+
 // Score : current score of a match
 type Score struct {
 	Sets []*Set `json:"sets"`
@@ -38,11 +53,6 @@ type Score struct {
 type Player struct {
 	ID   graphql.ID `json:"id"`
 	Name string     `json:"name"`
-}
-
-// GetType returns the type of the struct
-func (s *Player) GetType() string {
-	return "Player"
 }
 
 // Stadium : metadata about a stadium

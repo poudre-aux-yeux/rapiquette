@@ -76,6 +76,54 @@ func (c Client) GetAllPlayers() ([]Player, error) {
 	return players, nil
 }
 
+// GetAllReferees : Return every player
+func (c Client) GetAllReferees() ([]Referee, error) {
+	var referee Referee
+	keys, err := c.redis.GetSetMembers(referee.GetType())
+
+	if err != nil {
+		return nil, err
+	}
+
+	referees := make([]Referee, 0)
+
+	for _, key := range keys {
+		m, err := c.GetRefereeByID(graphql.ID(key))
+
+		if err != nil {
+			fmt.Printf("error getting item %v: %v\n", key, err)
+		}
+
+		referees = append(referees, m)
+	}
+
+	return referees, nil
+}
+
+// GetAllStadiums : Return every stadium
+func (c Client) GetAllStadiums() ([]Stadium, error) {
+	var stadium Stadium
+	keys, err := c.redis.GetSetMembers(stadium.GetType())
+
+	if err != nil {
+		return nil, err
+	}
+
+	stadiums := make([]Stadium, 0)
+
+	for _, key := range keys {
+		m, err := c.GetStadiumByID(graphql.ID(key))
+
+		if err != nil {
+			fmt.Printf("error getting item %v: %v\n", key, err)
+		}
+
+		stadiums = append(stadiums, m)
+	}
+
+	return stadiums, nil
+}
+
 // GetMatchByID : Finds a match in the key-value store
 func (c Client) GetMatchByID(id graphql.ID) (Match, error) {
 	data, err := c.redis.Get(string(id))
@@ -110,6 +158,40 @@ func (c Client) GetPlayerByID(id graphql.ID) (Player, error) {
 	return p, nil
 }
 
+// GetRefereeByID : Finds a match in the key-value store
+func (c Client) GetRefereeByID(id graphql.ID) (Referee, error) {
+	data, err := c.redis.Get(string(id))
+
+	if err != nil {
+		return Referee{}, fmt.Errorf("unable to resolve: %v", err)
+	}
+
+	var r Referee
+
+	if err = json.Unmarshal(data, &r); err != nil {
+		return Referee{}, fmt.Errorf("the data is malformed: %v", err)
+	}
+
+	return r, nil
+}
+
+// GetStadiumByID : Finds a match in the key-value store
+func (c Client) GetStadiumByID(id graphql.ID) (Stadium, error) {
+	data, err := c.redis.Get(string(id))
+
+	if err != nil {
+		return Stadium{}, fmt.Errorf("unable to resolve: %v", err)
+	}
+
+	var s Stadium
+
+	if err = json.Unmarshal(data, &s); err != nil {
+		return Stadium{}, fmt.Errorf("the data is malformed: %v", err)
+	}
+
+	return s, nil
+}
+
 // CreateMatch : Creates a match in the key-value store
 func (c Client) CreateMatch(m Match) (Match, error) {
 	id := generateID()
@@ -124,6 +206,22 @@ func (c Client) CreatePlayer(p Player) (Player, error) {
 	p.ID = graphql.ID(id)
 
 	return p, c.Create(p, id, p.GetType())
+}
+
+// CreateReferee adds a tennis referee to the key-value store
+func (c Client) CreateReferee(r Referee) (Referee, error) {
+	id := generateID()
+	r.ID = graphql.ID(id)
+
+	return r, c.Create(r, id, r.GetType())
+}
+
+// CreateStadium adds a stadium to the key-value store
+func (c Client) CreateStadium(r Stadium) (Stadium, error) {
+	id := generateID()
+	r.ID = graphql.ID(id)
+
+	return r, c.Create(r, id, r.GetType())
 }
 
 // Create adds an item to the key-value store
