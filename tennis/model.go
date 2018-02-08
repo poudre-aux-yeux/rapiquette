@@ -7,14 +7,16 @@ import (
 
 // Match : metadata about a match
 type Match struct {
-	ID           graphql.ID   `json:"id"`
-	Players      []*Player    `json:"players"`
-	PlayersLinks []graphql.ID `json:"playersLink"`
-	Std          *Stadium     `json:"stadium"`
-	StdLink      graphql.ID   `json:"stadiumLink"`
-	Ref          *Referee     `json:"referee"`
-	RefLink      graphql.ID   `json:"refereeLink"`
-	Date         graphql.Time `json:"date"`
+	ID               graphql.ID   `json:"id"`
+	HomePlayersLinks []graphql.ID `json:"homePlayers"`
+	AwayPlayersLinks []graphql.ID `json:"awayPlayers"`
+	StdLink          graphql.ID   `json:"stadium"`
+	RefLink          graphql.ID   `json:"referee"`
+	Date             graphql.Time `json:"date"`
+	HomePlayers      []*Player
+	AwayPlayers      []*Player
+	Std              *Stadium
+	Ref              *Referee
 	Score
 }
 

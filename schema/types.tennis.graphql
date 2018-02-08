@@ -8,8 +8,10 @@ type Match {
     stadium: Stadium!
     # The referee that will arbitrate this match
     referee: RefereeTennis!
-    # The players participating in this match (2 or 4 players)
-    players: [Player!]!
+    # The players participating in this match (1 or 2 players) for the home team
+    homePlayers: [Player!]!
+    # The players participating in this match (1 or 2 players) for the away team
+    awayPlayers: [Player!]!
     # The score of this game
     sets: [Set!]!
     # Who will serve next ? true = player 0, false = player 1

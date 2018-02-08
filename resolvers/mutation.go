@@ -8,10 +8,11 @@ import (
 )
 
 type createMatchArgs struct {
-	Date         graphql.Time
-	PlayersLinks []graphql.ID
-	RefereeLink  graphql.ID
-	StadiumLink  graphql.ID
+	Date             graphql.Time
+	HomePlayersLinks []graphql.ID
+	AwayPlayersLinks []graphql.ID
+	RefereeLink      graphql.ID
+	StadiumLink      graphql.ID
 }
 type createPlayerArgs struct {
 	Player tennis.Player
@@ -23,10 +24,11 @@ type startMatchArgs struct {
 // CreateMatch : mutation to create a match
 func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (*MatchResolver, error) {
 	m := tennis.Match{
-		Date:         args.Date,
-		RefLink:      args.RefereeLink,
-		PlayersLinks: args.PlayersLinks,
-		StdLink:      args.StadiumLink,
+		Date:             args.Date,
+		RefLink:          args.RefereeLink,
+		HomePlayersLinks: args.HomePlayersLinks,
+		AwayPlayersLinks: args.AwayPlayersLinks,
+		StdLink:          args.StadiumLink,
 	}
 
 	match, err := r.tennis.CreateMatch(m)

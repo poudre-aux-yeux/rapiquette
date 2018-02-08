@@ -1,6 +1,9 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
 
 	graphql "github.com/neelance/graphql-go"
@@ -21,10 +24,22 @@ func (r *MatchResolver) Date() graphql.Time {
 	return r.match.Date
 }
 
-// Players : resolves the players
-func (r *MatchResolver) Players() []*PlayerResolver {
-	// TODO get the players
-	return make([]*PlayerResolver, 0)
+// HomePlayers : resolves the home players
+func (r *MatchResolver) HomePlayers(ctx context.Context) ([]*PlayerResolver, error) {
+	for _, id := range r.match.HomePlayersLinks {
+		fmt.Print(id)
+	}
+
+	return make([]*PlayerResolver, 0), nil
+}
+
+// AwayPlayers : resolves the home players
+func (r *MatchResolver) AwayPlayers(ctx context.Context) ([]*PlayerResolver, error) {
+	for _, id := range r.match.AwayPlayersLinks {
+		fmt.Print(id)
+	}
+
+	return make([]*PlayerResolver, 0), nil
 }
 
 // Referee : resolves the tennis Referee

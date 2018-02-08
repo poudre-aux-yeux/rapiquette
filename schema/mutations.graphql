@@ -17,8 +17,10 @@ input CreatePlayerInput {
 input CreateMatchInput {
     # The datetime when the match will take place
 	Date: Time!
-    # The IDs of all the opponents
-    PlayersLinks: [ID!]!
+    # The IDs of all the home team players
+    HomePlayersLinks: [ID!]!
+    # The IDs of all the away team players
+    AwayPlayersLinks: [ID!]!
     # The ID of the referee who will arbitrate the match
     RefereeLink: ID!
     # The ID of the stadium where the match will be played
