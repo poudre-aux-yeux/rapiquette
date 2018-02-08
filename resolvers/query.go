@@ -24,7 +24,7 @@ func (r *RootResolver) Matches(ctx context.Context) ([]*MatchResolver, error) {
 	resolvers := make([]*MatchResolver, len(matches))
 
 	for i, match := range matches {
-		resolvers[i] = &MatchResolver{match: match}
+		resolvers[i] = &MatchResolver{match: match, tennis: r.tennis}
 	}
 
 	return resolvers, nil
@@ -38,7 +38,7 @@ func (r *RootResolver) Match(ctx context.Context, args *queryArgs) (*MatchResolv
 		return nil, err
 	}
 
-	return &MatchResolver{match: match}, nil
+	return &MatchResolver{match: match, tennis: r.tennis}, nil
 }
 
 // Players : resolves the Players query

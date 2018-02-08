@@ -11,7 +11,8 @@ import (
 
 // MatchResolver : resolves tennis.Match
 type MatchResolver struct {
-	match tennis.Match
+	match  tennis.Match
+	tennis *tennis.Client
 }
 
 // ID : resolves the ID
@@ -26,38 +27,54 @@ func (r *MatchResolver) Date() graphql.Time {
 
 // HomePlayers : resolves the home players
 func (r *MatchResolver) HomePlayers(ctx context.Context) ([]*PlayerResolver, error) {
+	players := make([]*PlayerResolver, 0)
+
 	for _, id := range r.match.HomePlayersLinks {
-		fmt.Print(id)
+		p, err := r.tennis.GetPlayerByID(id)
+
+		if err != nil {
+			return nil, fmt.Errorf("couldn't get the home player %s: %v", id, err)
+		}
+
+		players = append(players, &PlayerResolver{player: p})
 	}
 
-	return make([]*PlayerResolver, 0), nil
+	return players, nil
 }
 
 // AwayPlayers : resolves the home players
 func (r *MatchResolver) AwayPlayers(ctx context.Context) ([]*PlayerResolver, error) {
+	players := make([]*PlayerResolver, 0)
+
 	for _, id := range r.match.AwayPlayersLinks {
-		fmt.Print(id)
+		p, err := r.tennis.GetPlayerByID(id)
+
+		if err != nil {
+			return nil, fmt.Errorf("couldn't get the away player %s: %v", id, err)
+		}
+
+		players = append(players, &PlayerResolver{player: p})
 	}
 
-	return make([]*PlayerResolver, 0), nil
+	return players, nil
 }
 
 // Referee : resolves the tennis Referee
-func (r *MatchResolver) Referee() *TennisRefereeResolver {
+func (r *MatchResolver) Referee(ctx context.Context) (*TennisRefereeResolver, error) {
 	// TODO get the ref
-	return &TennisRefereeResolver{}
+	return &TennisRefereeResolver{}, nil
 }
 
 // Stadium : resolves the Stadium
-func (r *MatchResolver) Stadium() *StadiumResolver {
+func (r *MatchResolver) Stadium(ctx context.Context) (*StadiumResolver, error) {
 	// TODO get the stadium
-	return &StadiumResolver{}
+	return &StadiumResolver{}, nil
 }
 
 // Sets : resolves the sets
-func (r *MatchResolver) Sets() []*SetResolver {
+func (r *MatchResolver) Sets() ([]*SetResolver, error) {
 	// Todo get the sets
-	return make([]*SetResolver, 0)
+	return make([]*SetResolver, 0), nil
 }
 
 // Service : resolves the service
