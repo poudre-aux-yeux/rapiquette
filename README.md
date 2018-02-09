@@ -1,4 +1,6 @@
-rAPIquette
+# rAPIquette
+
+raquette + API = rAPIquette
 
 # Ecosystem
 
@@ -101,6 +103,12 @@ in-browser GraphQL IDE.
 [![](resources/graphiql.png)](http://graphql.org/swapi-graphql)
 
 To use it run `docker-compose up` and browse `http://localhost:3333`.
+
+## Apollo
+
+[Apollo](https://www.apollographql.com) provides GraphQL clients for React,
+Vue.js, Angular, Android, iOS and other frontend platforms.
+It is a good choice to query this API with an Apollo Client.
 
 ## Examples
 
