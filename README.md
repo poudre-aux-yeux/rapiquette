@@ -23,10 +23,12 @@ matches, stadiums ...
 
 The back-end is developped in [Go](https://golang.org/), an open-source
 programming language created at Google.
-It uses the standard library and the
-[neelance/graphql-go](https://github.com/neelance/graphql-go) GraphQL framework.
+It uses the standard library, the
+[neelance/graphql-go](https://github.com/neelance/graphql-go) GraphQL framework
+and the [Redigo](https://github.com/garyburd/redigo) Redis client.
 [GraphQL](https://graphql.org) is a Query Language for APIs, and aims to replace
 RESTful APIs.
+[Redis](https://redis.io/) is an in-memory key-value store.
 
 # Getting started
 
