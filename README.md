@@ -86,95 +86,21 @@ Or just run `docker-compose up`.
 
 # API Schema
 
-GraphQL Schema:
+## GraphQL Schema:
 
-``` graphql
-scalar Time
-
-schema {
-    query: Query
-    mutation: Mutation
-}
-
-type Query {
-    matches(): [Match!]!
-    
-    admin(id: ID!): Admin
-    refereeRaquette(id: ID!): RefereeRaquette
-    
-    match(id: ID!): Match
-    player(id: ID!): Player
-    stadium(id: ID!): Stadium
-    tennisReferee(id: ID!): TennisReferee
-    set(id: ID!): Set
-    game(id: ID!): Game
-}
-
-type Mutation {
-    createMatch(date: Time!, players: [ID!]!, referee: ID!): Match
-    startMatch(id: ID!): Match
-}
-
-interface User {
-    id: ID!
-    hash: String!
-    username: String!
-    email: String!
-}
-
-type Admin implements User {
-    id: ID!
-    hash: String!
-    username: String!
-    email: String!
-}
-
-type RefereeRaquette implements User {
-    id: ID!
-    hash: String!
-    username: String!
-    email: String!
-}
-
-type Match {
-    id: ID!
-    date: Time!
-    stadium: Stadium!
-    referee: TennisReferee!
-    players: [Player!]!
-    sets: [Set!]!
-    service: Boolean
-}
-
-type Player {
-    id: ID!
-    name: String!
-}
-
-type Stadium {
-    id: ID!
-    name: String!
-    city: String!
-}
-
-type TennisReferee {
-    id: ID!
-    name: String!
-}
-
-type Set {
-    id: ID!
-    games: [Game!]!
-}
-
-type Game {
-    id: ID!
-    homePoints: Int
-    awayPoints: Int
-}
-```
+To read the GraphQL schema documentation,
+run `docker-compose up` and browse `http://localhost:3333`.
 
 # Consume the API
+
+## GraphiQL
+
+[GraphiQL](https://github.com/graphql/graphiql) is a graphical interactive
+in-browser GraphQL IDE.
+
+[![](resources/graphiql.png)](http://graphql.org/swapi-graphql)
+
+To use it run `docker-compose up` and browse `http://localhost:3333`.
 
 ## Examples
 
