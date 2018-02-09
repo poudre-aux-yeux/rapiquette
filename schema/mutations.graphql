@@ -1,12 +1,14 @@
 type Mutation {
     # Create a new match
-    createMatch(date: Time!, players: [ID!]!, referee: ID!): Match
+    createMatch(date: Time!, homePlayers: [ID!]!, awayPlayers: [ID!]!, referee: ID!, stadium: ID!): Match
     # Start a match
     startMatch(id: ID!): Match
     # Create a new player
     createPlayer(player: CreatePlayerInput!): Player
     # Create a new tennis referee
     createTennisReferee(referee: CreateTennisRefereeInput!): TennisReferee
+    # Create a new stadium
+    createStadium(stadium: CreateStadiumInput!): Stadium
 }
 
 # Input required to create a new player
@@ -33,4 +35,13 @@ input CreateMatchInput {
     RefereeLink: ID!
     # The ID of the stadium where the match will be played
     StadiumLink: ID!
+}
+
+input CreateStadiumInput {
+    # Type of ground (grass, clay ...)
+    GroundType: String!
+    # Stadium name
+    Name: String!
+    # City where the stadium is located
+    City: String!
 }

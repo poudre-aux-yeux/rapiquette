@@ -73,6 +73,18 @@ func (rd *Redis) Exists(key string) (bool, error) {
 	return ok, err
 }
 
+// ExistsInSet will return true if an item is present in a set
+func (rd *Redis) ExistsInSet(set, key string) (bool, error) {
+	conn := rd.Pool.Get()
+	defer conn.Close()
+
+	ok, err := redis.Bool(conn.Do("SISMEMBER", set, key))
+	if err != nil {
+		return ok, fmt.Errorf("error checking the key %s exists in set %s: %v", key, set, err)
+	}
+	return ok, err
+}
+
 // Delete will remove an item by its key
 func (rd *Redis) Delete(key string) error {
 	conn := rd.Pool.Get()

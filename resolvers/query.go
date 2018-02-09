@@ -65,41 +65,72 @@ func (r *RootResolver) Player(ctx context.Context, args *queryArgs) (*PlayerReso
 	return &PlayerResolver{player: player}, err
 }
 
-// Stadium : resolves the Stadium query
-func (r *RootResolver) Stadium(args *queryArgs) *StadiumResolver {
-	stadium := tennis.Stadium{}
-	return &StadiumResolver{stadium: stadium}
+// Stadiums : resolves the Stadiums query
+func (r *RootResolver) Stadiums(ctx context.Context) ([]*StadiumResolver, error) {
+	stds, err := r.tennis.GetAllStadiums()
+
+	if err != nil {
+		return nil, err
+	}
+
+	resolvers := make([]*StadiumResolver, len(stds))
+
+	for i, stadium := range stds {
+		resolvers[i] = &StadiumResolver{stadium: stadium}
+	}
+
+	return resolvers, nil
 }
 
-// RefereeTennis : resolves the RefereeTennis query
-func (r *RootResolver) RefereeTennis(ctx context.Context, args *queryArgs) (*TennisRefereeResolver, error) {
+// Stadium : resolves the Stadium query
+func (r *RootResolver) Stadium(ctx context.Context, args *queryArgs) (*StadiumResolver, error) {
+	stadium, err := r.tennis.GetStadiumByID(args.ID)
+	return &StadiumResolver{stadium: stadium}, err
+}
+
+// TennisReferees : resolves the TennisReferees query
+func (r *RootResolver) TennisReferees(ctx context.Context) ([]*TennisRefereeResolver, error) {
+	refs, err := r.tennis.GetAllReferees()
+
+	if err != nil {
+		return nil, err
+	}
+
+	resolvers := make([]*TennisRefereeResolver, len(refs))
+
+	for i, ref := range refs {
+		resolvers[i] = &TennisRefereeResolver{ref: ref}
+	}
+
+	return resolvers, nil
+}
+
+// TennisReferee : resolves the TennisReferee query
+func (r *RootResolver) TennisReferee(ctx context.Context, args *queryArgs) (*TennisRefereeResolver, error) {
 	ref, err := r.tennis.GetRefereeByID(args.ID)
 	return &TennisRefereeResolver{ref: ref}, err
 }
 
 // Set : resolves the Set query
-func (r *RootResolver) Set(args *queryArgs) *SetResolver {
+func (r *RootResolver) Set(ctx context.Context, args *queryArgs) (*SetResolver, error) {
 	set := tennis.Set{}
-	return &SetResolver{set: set}
+	return &SetResolver{set: set}, ErrNotImplemented
 }
 
 // Game : resolves the Game query
-func (r *RootResolver) Game(args *queryArgs) *GameResolver {
+func (r *RootResolver) Game(ctx context.Context, args *queryArgs) (*GameResolver, error) {
 	game := tennis.Game{}
-	return &GameResolver{game: game}
+	return &GameResolver{game: game}, ErrNotImplemented
 }
 
 // Admin : resolves the Admin query
-func (r *RootResolver) Admin(args *queryArgs) *AdminResolver {
+func (r *RootResolver) Admin(ctx context.Context, args *queryArgs) (*AdminResolver, error) {
 	admin := raquette.Admin{}
-	admin.ID = "abcd"
-	admin.Email = "a@b.fr"
-	admin.PasswordHash = "2130192UIUFDISFU"
-	return &AdminResolver{admin: admin}
+	return &AdminResolver{admin: admin}, ErrNotImplemented
 }
 
 // RefereeRaquette : resolves the RefereeRaquette query
-func (r *RootResolver) RefereeRaquette(args *queryArgs) *RaquetteRefereeResolver {
+func (r *RootResolver) RefereeRaquette(ctx context.Context, args *queryArgs) (*RaquetteRefereeResolver, error) {
 	ref := raquette.Referee{}
-	return &RaquetteRefereeResolver{ref: ref}
+	return &RaquetteRefereeResolver{ref: ref}, ErrNotImplemented
 }

@@ -7,7 +7,7 @@ type Match {
     # The stadium this match will happen in
     stadium: Stadium!
     # The referee that will arbitrate this match
-    referee: RefereeTennis!
+    referee: TennisReferee!
     # The players participating in this match (1 or 2 players) for the home team
     homePlayers: [Player!]!
     # The players participating in this match (1 or 2 players) for the away team
@@ -34,10 +34,12 @@ type Stadium {
     name: String!
     # The city the stadium is located in
     city: String!
+    # The ground type (ex: grass, clay)
+    surface: String!
 }
 
 # A tennis referee
-type RefereeTennis {
+type TennisReferee {
     # The ID of the tennis referee
     id: ID!
     # The full name of the referee

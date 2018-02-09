@@ -24,3 +24,8 @@ func (r *StadiumResolver) Name() string {
 func (r *StadiumResolver) City() string {
 	return r.stadium.City
 }
+
+// Surface : the ground type
+func (r *StadiumResolver) Surface() string {
+	return r.stadium.GroundType
+}

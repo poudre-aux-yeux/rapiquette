@@ -1,15 +1,27 @@
 type Query {
     # All matches
     matches(): [Match!]!
+    # All players
     players(): [Player!]!
-    
+    # All tennis referees
+    tennisReferees(): [TennisReferee!]!
+    # All stadiums:
+    stadiums(): [Stadium!]!
+
+    # Retrieve an admin
     admin(id: ID!): Admin
+    # Retrieve a raquette referee
     refereeRaquette(id: ID!): RefereeRaquette
-    
+    # Retrieve a match
     match(id: ID!): Match
+    # Retrieve a player
     player(id: ID!): Player
+    # Retrieve a stadium
     stadium(id: ID!): Stadium
-    refereeTennis(id: ID!): RefereeTennis
+    # Retrieve a tennis referee
+    tennisReferee(id: ID!): TennisReferee
+    # Retrieve a set
     set(id: ID!): Set
+    # Retrieve a game
     game(id: ID!): Game
 }

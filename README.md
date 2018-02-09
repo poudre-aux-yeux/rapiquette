@@ -52,7 +52,7 @@ type Query {
     match(id: ID!): Match
     player(id: ID!): Player
     stadium(id: ID!): Stadium
-    refereeTennis(id: ID!): RefereeTennis
+    tennisReferee(id: ID!): TennisReferee
     set(id: ID!): Set
     game(id: ID!): Game
 }
@@ -87,7 +87,7 @@ type Match {
     id: ID!
     date: Time!
     stadium: Stadium!
-    referee: RefereeTennis!
+    referee: TennisReferee!
     players: [Player!]!
     sets: [Set!]!
     service: Boolean
@@ -104,7 +104,7 @@ type Stadium {
     city: String!
 }
 
-type RefereeTennis {
+type TennisReferee {
     id: ID!
     name: String!
 }
@@ -173,5 +173,90 @@ with the Query Variables:
 ``` graphql
 {
   	"id": "10Abbwj2Zg8sETDPUq99I52FiuA"
+}
+```
+
+Create a stadium:
+
+``` graphql
+mutation CreateNewStadium($stadium: CreateStadiumInput!) {
+  createStadium(stadium: $stadium) {
+    id
+    name
+    city
+    surface
+  }
+}
+
+# Query Variables
+{
+  "stadium": {
+    "GroundType": "clay",
+    "Name": "Center Court",
+    "City": "Wimbledon, London"
+  }
+}
+```
+
+Create a referee:
+
+``` graphql
+mutation CreateNewReferee($ref: CreateTennisRefereeInput!) {
+  createTennisReferee(referee: $ref) {
+    id
+    name
+  }
+}
+
+# Query Variables
+{
+  "ref": {
+    "name": "James Keothavong"
+  }
+}
+```
+
+Create a match:
+
+``` graphql
+mutation CreateNewMatch(
+  $date: Time!,
+  $homePlayers: [ID!]!,
+  $awayPlayers: [ID!]!,
+  $referee: ID!,
+  $stadium: ID!
+) {
+  createMatch(date: $date, homePlayers: $homePlayers, awayPlayers: $awayPlayers, referee: $referee, stadium: $stadium) {
+    id
+    date
+    stadium {
+      id
+      name
+      city
+      surface
+    }
+    referee {
+      id
+      name
+    }
+    homePlayers {
+      id
+      name
+    }
+    awayPlayers {
+      id
+      name
+    }
+  }
+}
+
+# Query Variables
+
+{
+  "date": "2018-11-10T23:00:00Z",
+  "homePlayers": ["10JEIUJTiophMWzEGqaAb3fvMY3"],
+  "awayPlayers": ["10JEOE9xEjIb5LpQzKIGfgvIsJo"],
+  "referee": "10JG02R4lHisO0T3I5r2FclC10s",
+  "stadium": "10JDckheW3F2AcXNNdkfsOXz4zM"
 }
 ```
