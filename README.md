@@ -80,7 +80,7 @@ rapiquette
 
 Set the `GIN_MODE` environment variable to `release`.
 Set the `RAQUETTE_HOST` and `TENNIS_HOST` environment variables to your Redis
-location (can be the same instance of 2 different databases).
+location (can be the same instance or 2 different databases).
 
 Or just run `docker-compose up`.
 
