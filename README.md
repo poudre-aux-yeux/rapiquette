@@ -2,16 +2,41 @@ rAPIquette
 
 # Ecosystem
 
-Front-ends :
+**Back-end:**
 
-[MonArbitreRaquette](https://github.com/poudre-aux-yeux/mon-arbitre-raquette) : Application Web pour l'arbitre
+[rAPIquette](https://github.com/poudre-aux-yeux/rapiquette): GraphQL API
 
-[MatteMaRaquette](https://github.com/poudre-aux-yeux/ATP_LIVE) : Application Web pour consulter en direct les résultats
+**Front-ends:**
 
-GereMaRaquette : Application Web de gestion (back-office) des joueurs, terrains, matchs ...
+[MonArbitreRaquette](https://github.com/poudre-aux-yeux/mon-arbitre-raquette):
+Web application for the referee
 
+[MatteMaRaquette](https://github.com/poudre-aux-yeux/ATP_LIVE):
+Web application to watch the live scores and results
+
+GereMaRaquette: Back-office Web application to administrate accounts, players,
+matches, stadiums ...
+
+# Languages and frameworks
+
+The back-end is developped in [Go](https://golang.org/), an open-source
+programming language created at Google.
+It uses the standard library and the
+[neelance/graphql-go](https://github.com/neelance/graphql-go) GraphQL framework.
+[GraphQL](https://graphql.org) is a Query Language for APIs, and aims to replace
+RESTful APIs.
 
 # Getting started
+
+## Run the API
+
+``` sh
+docker-compose up
+```
+
+## DEBUG
+
+Get and build the dependencies:
 
 ``` sh
 # Install the dependencies
@@ -20,18 +45,46 @@ go get
 go get -u github.com/jteeuwen/go-bindata/...
 # If using cmd.exe, omit the './'
 ./build.sh
-# Run the executable
+```
+
+Start the databases:
+
+``` sh
+docker-compose up tennis-redis raquette-redis
+```
+
+Start the API:
+
+``` sh
+# Unix
+RAQUETTE_HOST=localhost:6380
+TENNIS_HOST=localhost:6379
 ./rapiquette
+```
+
+``` powershell
+# Powershell
+$env:RAQUETTE_HOST="localhost:6380"
+$env:TENNIS_HOST="localhost:6379"
+.\rapiquette
+```
+
+``` batch
+:: cmd.exe
+SET RAQUETTE_HOST=localhost:6380
+SET TENNIS_HOST=localhost:6379
+rapiquette
 ```
 
 # Deploy
 
-Set the `GIN_MODE` environment variable to `release`
-Set the `REDIS_HOST` environment variable to your Redis location
+Set the `GIN_MODE` environment variable to `release`.
+Set the `RAQUETTE_HOST` and `TENNIS_HOST` environment variables to your Redis
+location (can be the same instance of 2 different databases).
 
-Or just run docker compose up
+Or just run `docker-compose up`.
 
-# API
+# API Schema
 
 GraphQL Schema:
 
@@ -123,7 +176,7 @@ type Game {
 
 # Consume the API
 
-## Mutations
+## Examples
 
 Create a new player, with the following query:
 
