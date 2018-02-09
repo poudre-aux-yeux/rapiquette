@@ -87,7 +87,7 @@ func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (
 
 	match, err := r.tennis.CreateMatch(m)
 
-	return &MatchResolver{match: match}, err
+	return &MatchResolver{match: match, tennis: r.tennis}, err
 }
 
 // CreatePlayer creates a new Player and returns it

@@ -66,7 +66,7 @@ func (rd *Redis) Exists(key string) (bool, error) {
 	conn := rd.Pool.Get()
 	defer conn.Close()
 
-	ok, err := redis.Bool(conn.Do("EXISTS", key))
+	ok, err := redis.Bool(conn.Do("EXISTS", "["+key+"]"))
 	if err != nil {
 		return ok, fmt.Errorf("error checking if key %s exists: %v", key, err)
 	}
@@ -78,7 +78,7 @@ func (rd *Redis) ExistsInSet(set, key string) (bool, error) {
 	conn := rd.Pool.Get()
 	defer conn.Close()
 
-	ok, err := redis.Bool(conn.Do("SISMEMBER", set, key))
+	ok, err := redis.Bool(conn.Do("SISMEMBER", set, "["+key+"]"))
 	if err != nil {
 		return ok, fmt.Errorf("error checking the key %s exists in set %s: %v", key, set, err)
 	}

@@ -61,14 +61,14 @@ func (r *MatchResolver) AwayPlayers(ctx context.Context) ([]*PlayerResolver, err
 
 // Referee : resolves the tennis Referee
 func (r *MatchResolver) Referee(ctx context.Context) (*TennisRefereeResolver, error) {
-	// TODO get the ref
-	return &TennisRefereeResolver{}, nil
+	ref, err := r.tennis.GetRefereeByID(r.match.RefLink)
+	return &TennisRefereeResolver{ref: ref}, err
 }
 
 // Stadium : resolves the Stadium
 func (r *MatchResolver) Stadium(ctx context.Context) (*StadiumResolver, error) {
-	// TODO get the stadium
-	return &StadiumResolver{}, nil
+	stadium, err := r.tennis.GetStadiumByID(r.match.StdLink)
+	return &StadiumResolver{stadium: stadium}, err
 }
 
 // Sets : resolves the sets
