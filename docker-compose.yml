@@ -5,34 +5,35 @@ services:
     ports:
       - "3333:3333"
     environment:
-      - RAQUETTE_HOST=raquette-redis:6379
+      - RAQUETTE_HOST=raquette-redis:6380
       - TENNIS_HOST=tennis-redis:6379
-    # networks:
-    #   - tennis-network
+      - GIN_MODE=release
     depends_on:
       - tennis-redis
-      # - raquette-redis
+      - raquette-redis
   
   tennis-redis:
-    image: redis:4.0.5-alpine
+    image: redis:4.0.8-alpine
     command: ["redis-server", "--appendonly", "yes"]
     hostname: tennis-redis
     ports:
       - "6379:6379"
-    # networks:
-    #   - tennis-network
+    networks:
+      - tennis-network
     volumes:
       - tennis-data:/data
   
-  # raquette-redis:
-  #   image: redis
-  #   hostname: raquette-redis
-  #   volumes:
-  #     - raquette-data:/data
-
-# networks:
-#   tennis-network:
+  raquette-redis:
+    image: redis:4.0.8-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: raquette-redis
+    ports:
+      - "6380:6379"
+    networks:
+      - raquette-network
+    volumes:
+      - raquette-data:/data
 
 volumes:
   tennis-data:
-  # raquette-data:
+  raquette-data:
