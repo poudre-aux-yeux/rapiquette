@@ -5,7 +5,6 @@ import (
 	"context"
 
 	graphql "github.com/neelance/graphql-go"
-	"github.com/poudre-aux-yeux/rapiquette/raquette"
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
 )
 
@@ -24,7 +23,7 @@ func (r *RootResolver) Admins(ctx context.Context) ([]*AdminResolver, error) {
 	resolvers := make([]*AdminResolver, len(admins))
 
 	for i, admin := range admins {
-		resolvers[i] = &AdminResolver{admin: &admin}
+		resolvers[i] = &AdminResolver{admin: admin}
 	}
 
 	return resolvers, nil
@@ -41,7 +40,7 @@ func (r *RootResolver) RaquetteReferees(ctx context.Context) ([]*RaquetteReferee
 	resolvers := make([]*RaquetteRefereeResolver, len(refs))
 
 	for i, ref := range refs {
-		resolvers[i] = &RaquetteRefereeResolver{ref: &ref, tennis: r.tennis}
+		resolvers[i] = &RaquetteRefereeResolver{ref: ref, tennis: r.tennis}
 	}
 
 	return resolvers, nil
@@ -161,14 +160,12 @@ func (r *RootResolver) Game(ctx context.Context, args *queryArgs) (*GameResolver
 
 // Admin : resolves the Admin query
 func (r *RootResolver) Admin(ctx context.Context, args *queryArgs) (*AdminResolver, error) {
-	panic("not implemented")
-	admin := raquette.Admin{}
-	return &AdminResolver{admin: &admin}, ErrNotImplemented
+	admin, err := r.raquette.GetAdminByID(args.ID)
+	return &AdminResolver{admin: admin}, err
 }
 
 // RaquetteReferee : resolves the RaquetteReferee query
 func (r *RootResolver) RaquetteReferee(ctx context.Context, args *queryArgs) (*RaquetteRefereeResolver, error) {
-	panic("not implemented")
-	ref := raquette.Referee{}
-	return &RaquetteRefereeResolver{ref: &ref}, ErrNotImplemented
+	ref, err := r.raquette.GetRefereeByID(args.ID)
+	return &RaquetteRefereeResolver{ref: ref}, err
 }

@@ -19,8 +19,8 @@ func (r *RaquetteRefereeResolver) ID() graphql.ID {
 	return r.ref.ID
 }
 
-// Hash : resolves the Hash
-func (r *RaquetteRefereeResolver) Hash() string {
+// PasswordHash : resolves the PasswordHash
+func (r *RaquetteRefereeResolver) PasswordHash() string {
 	return r.ref.PasswordHash
 }
 
