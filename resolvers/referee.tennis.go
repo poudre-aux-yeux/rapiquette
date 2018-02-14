@@ -7,7 +7,7 @@ import (
 
 // TennisRefereeResolver resolves tennis.Referee
 type TennisRefereeResolver struct {
-	ref tennis.Referee
+	ref *tennis.Referee
 }
 
 // ID : resolves the ID

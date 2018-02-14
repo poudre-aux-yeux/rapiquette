@@ -40,13 +40,13 @@ func (c Client) GetAllMatches() ([]Match, error) {
 	matches := make([]Match, 0)
 
 	for _, key := range keys {
-		m, err := c.GetMatchByID(graphql.ID(key))
+		match, err = c.GetMatchByID(graphql.ID(key))
 
 		if err != nil {
 			fmt.Printf("error getting item %v: %v\n", key, err)
 		}
 
-		matches = append(matches, m)
+		matches = append(matches, match)
 	}
 
 	return matches, nil
@@ -64,20 +64,20 @@ func (c Client) GetAllPlayers() ([]Player, error) {
 	players := make([]Player, 0)
 
 	for _, key := range keys {
-		m, err := c.GetPlayerByID(graphql.ID(key))
+		player, err = c.GetPlayerByID(graphql.ID(key))
 
 		if err != nil {
 			fmt.Printf("error getting item %v: %v\n", key, err)
 		}
 
-		players = append(players, m)
+		players = append(players, player)
 	}
 
 	return players, nil
 }
 
 // GetAllReferees : Return every player
-func (c Client) GetAllReferees() ([]Referee, error) {
+func (c Client) GetAllReferees() ([]*Referee, error) {
 	var referee Referee
 	keys, err := c.redis.GetSetMembers(referee.GetType())
 
@@ -85,16 +85,16 @@ func (c Client) GetAllReferees() ([]Referee, error) {
 		return nil, err
 	}
 
-	referees := make([]Referee, 0)
+	referees := make([]*Referee, 0)
 
 	for _, key := range keys {
-		m, err := c.GetRefereeByID(graphql.ID(key))
+		r, err := c.GetRefereeByID(graphql.ID(key))
 
 		if err != nil {
 			fmt.Printf("error getting item %v: %v\n", key, err)
 		}
 
-		referees = append(referees, m)
+		referees = append(referees, r)
 	}
 
 	return referees, nil
@@ -112,13 +112,13 @@ func (c Client) GetAllStadiums() ([]Stadium, error) {
 	stadiums := make([]Stadium, 0)
 
 	for _, key := range keys {
-		m, err := c.GetStadiumByID(graphql.ID(key))
+		stadium, err = c.GetStadiumByID(graphql.ID(key))
 
 		if err != nil {
 			fmt.Printf("error getting item %v: %v\n", key, err)
 		}
 
-		stadiums = append(stadiums, m)
+		stadiums = append(stadiums, stadium)
 	}
 
 	return stadiums, nil
@@ -159,20 +159,20 @@ func (c Client) GetPlayerByID(id graphql.ID) (Player, error) {
 }
 
 // GetRefereeByID : Finds a match in the key-value store
-func (c Client) GetRefereeByID(id graphql.ID) (Referee, error) {
+func (c Client) GetRefereeByID(id graphql.ID) (*Referee, error) {
 	data, err := c.redis.Get(string(id))
 
 	if err != nil {
-		return Referee{}, fmt.Errorf("unable to resolve: %v", err)
+		return nil, fmt.Errorf("unable to resolve: %v", err)
 	}
 
 	var r Referee
 
 	if err = json.Unmarshal(data, &r); err != nil {
-		return Referee{}, fmt.Errorf("the data is malformed: %v", err)
+		return nil, fmt.Errorf("the data is malformed: %v", err)
 	}
 
-	return r, nil
+	return &r, nil
 }
 
 // GetStadiumByID : Finds a match in the key-value store

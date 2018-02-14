@@ -101,7 +101,7 @@ func (r *RootResolver) CreatePlayer(ctx context.Context, args *createPlayerArgs)
 func (r *RootResolver) CreateTennisReferee(ctx context.Context, args *createTennisRefereeArgs) (*TennisRefereeResolver, error) {
 	ref, err := r.tennis.CreateReferee(args.Referee)
 
-	return &TennisRefereeResolver{ref: ref}, err
+	return &TennisRefereeResolver{ref: &ref}, err
 }
 
 // CreateStadium creates a new Stadium and returns it

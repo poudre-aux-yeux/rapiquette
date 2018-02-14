@@ -46,7 +46,7 @@ func (app *App) initializeRaquetteKeyValueStore() {
 		host = ":6379"
 	}
 	redis := kvs.NewRedis(host)
-	client, err := raquette.New(redis.Pool)
+	client, err := raquette.New(redis)
 
 	if err != nil {
 		fmt.Println(err)

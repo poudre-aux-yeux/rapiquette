@@ -1,23 +1,31 @@
 # An application user, with no particular rights
 interface User {
+    # The ID of the user
     id: ID!
-    hash: String!
+    # The username displayed to others
     username: String!
+    # The email address, used to login
     email: String!
 }
 
 # An user with administrator rights, that can grant privileges, manage stadiums and create matches
 type Admin implements User {
+    # The ID of the user
     id: ID!
-    hash: String!
+    # The username displayed to others
     username: String!
+    # The email address, used to login
     email: String!
 }
 
 # An user with referee rights. Referees can start matches, give points ...
-type RefereeRaquette implements User {
+type RaquetteReferee implements User {
+    # The ID of the user
     id: ID!
-    hash: String!
+    # The username displayed to others
     username: String!
+    # The email address, used to login
     email: String!
+    # The tennis referee associated with this account
+    ref: TennisReferee
 }

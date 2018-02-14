@@ -7,7 +7,7 @@ import (
 
 // AdminResolver : resolves raquette.Admin
 type AdminResolver struct {
-	admin raquette.Admin
+	admin *raquette.Admin
 }
 
 // ID : resolves the ID
@@ -25,7 +25,7 @@ func (r *AdminResolver) Email() string {
 	return r.admin.Email
 }
 
-// Hash : resolves the PasswordHash
-func (r *AdminResolver) Hash() string {
+// PasswordHash : resolves the PasswordHash
+func (r *AdminResolver) PasswordHash() string {
 	return r.admin.PasswordHash
 }

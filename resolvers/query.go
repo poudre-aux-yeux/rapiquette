@@ -13,6 +13,40 @@ type queryArgs struct {
 	ID graphql.ID
 }
 
+// Admins : resolves the Admin query
+func (r *RootResolver) Admins(ctx context.Context) ([]*AdminResolver, error) {
+	admins, err := r.raquette.GetAllAdmins()
+
+	if err != nil {
+		return nil, err
+	}
+
+	resolvers := make([]*AdminResolver, len(admins))
+
+	for i, admin := range admins {
+		resolvers[i] = &AdminResolver{admin: &admin}
+	}
+
+	return resolvers, nil
+}
+
+// RaquetteReferees : resolves the RaquetteReferee query
+func (r *RootResolver) RaquetteReferees(ctx context.Context) ([]*RaquetteRefereeResolver, error) {
+	refs, err := r.raquette.GetAllReferees()
+
+	if err != nil {
+		return nil, err
+	}
+
+	resolvers := make([]*RaquetteRefereeResolver, len(refs))
+
+	for i, ref := range refs {
+		resolvers[i] = &RaquetteRefereeResolver{ref: &ref, tennis: r.tennis}
+	}
+
+	return resolvers, nil
+}
+
 // Matches : resolves the Matches query
 func (r *RootResolver) Matches(ctx context.Context) ([]*MatchResolver, error) {
 	matches, err := r.tennis.GetAllMatches()
@@ -113,24 +147,28 @@ func (r *RootResolver) TennisReferee(ctx context.Context, args *queryArgs) (*Ten
 
 // Set : resolves the Set query
 func (r *RootResolver) Set(ctx context.Context, args *queryArgs) (*SetResolver, error) {
+	panic("not implemented")
 	set := tennis.Set{}
 	return &SetResolver{set: set}, ErrNotImplemented
 }
 
 // Game : resolves the Game query
 func (r *RootResolver) Game(ctx context.Context, args *queryArgs) (*GameResolver, error) {
+	panic("not implemented")
 	game := tennis.Game{}
 	return &GameResolver{game: game}, ErrNotImplemented
 }
 
 // Admin : resolves the Admin query
 func (r *RootResolver) Admin(ctx context.Context, args *queryArgs) (*AdminResolver, error) {
+	panic("not implemented")
 	admin := raquette.Admin{}
-	return &AdminResolver{admin: admin}, ErrNotImplemented
+	return &AdminResolver{admin: &admin}, ErrNotImplemented
 }
 
-// RefereeRaquette : resolves the RefereeRaquette query
-func (r *RootResolver) RefereeRaquette(ctx context.Context, args *queryArgs) (*RaquetteRefereeResolver, error) {
+// RaquetteReferee : resolves the RaquetteReferee query
+func (r *RootResolver) RaquetteReferee(ctx context.Context, args *queryArgs) (*RaquetteRefereeResolver, error) {
+	panic("not implemented")
 	ref := raquette.Referee{}
-	return &RaquetteRefereeResolver{ref: ref}, ErrNotImplemented
+	return &RaquetteRefereeResolver{ref: &ref}, ErrNotImplemented
 }
