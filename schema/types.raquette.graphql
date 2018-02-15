@@ -29,3 +29,5 @@ type RaquetteReferee implements User {
     # The tennis referee associated with this account
     ref: TennisReferee
 }
+
+union UserSearchResult = Admin | RaquetteReferee

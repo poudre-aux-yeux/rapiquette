@@ -6,6 +6,10 @@ type Query {
     # All raquette referees
     raquetteReferees(): [RaquetteReferee!]!
 
+    ## Filtered
+    # Search users
+	searchUsers(text: String!): [UserSearchResult!]!
+
     ## ByID
     # Retrieve an admin
     admin(id: ID!): Admin
@@ -22,6 +26,10 @@ type Query {
     tennisReferees(): [TennisReferee!]!
     # All stadiums:
     stadiums(): [Stadium!]!
+
+    ## Filtered
+    # Search everything tennis related
+    tennisSearch(text: String!): [SearchResult!]!
     
     ## ByID
     # Retrieve a match

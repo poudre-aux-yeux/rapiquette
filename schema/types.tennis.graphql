@@ -63,3 +63,5 @@ type Game {
     # Points are just ints: 0, 1, 2, 3
     awayPoints: Int
 }
+
+union SearchResult = Match | Stadium | Player | TennisReferee

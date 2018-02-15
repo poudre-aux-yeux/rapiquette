@@ -3,6 +3,7 @@ package resolvers
 
 import (
 	"context"
+	"strings"
 
 	graphql "github.com/neelance/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
@@ -10,6 +11,10 @@ import (
 
 type queryArgs struct {
 	ID graphql.ID
+}
+
+type searchArgs struct {
+	Text string
 }
 
 // Admins : resolves the Admin query
@@ -168,4 +173,42 @@ func (r *RootResolver) Admin(ctx context.Context, args *queryArgs) (*AdminResolv
 func (r *RootResolver) RaquetteReferee(ctx context.Context, args *queryArgs) (*RaquetteRefereeResolver, error) {
 	ref, err := r.raquette.GetRefereeByID(args.ID)
 	return &RaquetteRefereeResolver{ref: ref}, err
+}
+
+// SearchUsers : search Admins and RaquetteReferees
+func (r *RootResolver) SearchUsers(ctx context.Context, args *searchArgs) ([]*UserSearchResolver, error) {
+	// TODO : Filter with Redis capabilities instead of retrieving everything and filtering
+	var l []*UserSearchResolver
+	admins, err := r.raquette.GetAllAdmins()
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, admin := range admins {
+		if strings.Contains(admin.Username, args.Text) {
+			l = append(l, &UserSearchResolver{&AdminResolver{admin: admin}})
+		}
+	}
+
+	refs, err := r.raquette.GetAllReferees()
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, ref := range refs {
+		if strings.Contains(ref.Username, args.Text) {
+			l = append(l, &UserSearchResolver{&RaquetteRefereeResolver{ref: ref}})
+		}
+	}
+	return l, nil
+}
+
+// TennisSearch : search Stadiums, tennis Refs, Players and Matches
+func (r *RootResolver) TennisSearch(ctx context.Context, args *searchArgs) ([]*SearchResolver, error) {
+	// TODO : search stadiums, refs and players with Redis
+	// TODO : add all matches with stadiums, refs and players found
+	panic("not implemented")
+	return nil, ErrNotImplemented
 }
