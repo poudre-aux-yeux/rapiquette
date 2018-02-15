@@ -49,7 +49,7 @@ go get -u github.com/golang/dep/cmd/dep
 # Generate the schema builder
 cd schema && go generate && cd ..
 # Install the dependencies
-dep ensure
+dep ensure -vendor-only
 # If using cmd.exe, omit the './'
 ./build.sh
 ```
