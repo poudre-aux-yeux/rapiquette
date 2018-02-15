@@ -105,7 +105,7 @@ run `docker-compose up` and browse `http://localhost:3333`.
 [GraphiQL](https://github.com/graphql/graphiql) is a graphical interactive
 in-browser GraphQL IDE.
 
-[![](resources/graphiql.png)](http://graphql.org/swapi-graphql)
+[![GraphiQL screenshot](https://raw.githubusercontent.com/graphql/graphiql/master/resources/graphiql.png)](http://graphql.org/swapi-graphql)
 
 To use it run `docker-compose up` and browse `http://localhost:3333`.
 
