@@ -33,6 +33,11 @@ type GraphQL struct {
 
 // ServeHTTP handles the GraphQL requets (queries and mutations)
 func (g GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		respond(w, make([]byte, 0), http.StatusOK)
+		return
+	}
+
 	req, err := parse(r)
 	if err != nil {
 		respond(w, errorJSON(err.Error()), http.StatusBadRequest)

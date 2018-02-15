@@ -43,10 +43,12 @@ docker-compose up
 Get and build the dependencies:
 
 ``` sh
-# Install the dependencies
-go get
 # Install go generate
 go get -u github.com/jteeuwen/go-bindata/...
+# Generate the schema builder
+cd schema && go generate && cd ..
+# Install the dependencies
+go get
 # If using cmd.exe, omit the './'
 ./build.sh
 ```
