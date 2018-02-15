@@ -5,7 +5,7 @@ COPY . .
 RUN go get -u github.com/jteeuwen/go-bindata/...
 RUN go get -u github.com/golang/dep/cmd/dep
 RUN cd schema && go generate
-RUN dep ensure
+RUN dep ensure -vendor-only
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o rapiquette
 
 FROM alpine
