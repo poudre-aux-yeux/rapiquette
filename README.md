@@ -45,10 +45,11 @@ Get and build the dependencies:
 ``` sh
 # Install go generate
 go get -u github.com/jteeuwen/go-bindata/...
+go get -u github.com/golang/dep/cmd/dep
 # Generate the schema builder
 cd schema && go generate && cd ..
 # Install the dependencies
-go get
+dep ensure
 # If using cmd.exe, omit the './'
 ./build.sh
 ```

@@ -3,8 +3,9 @@ FROM golang:latest as builder
 WORKDIR /go/src/github.com/poudre-aux-yeux/rapiquette
 COPY . .
 RUN go get -u github.com/jteeuwen/go-bindata/...
+RUN go get -u github.com/golang/dep/cmd/dep
 RUN cd schema && go generate
-RUN go get
+RUN dep ensure
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o rapiquette
 
 FROM alpine
