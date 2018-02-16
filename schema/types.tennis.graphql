@@ -24,6 +24,8 @@ type Player {
     id: ID!
     # The player's full name
     name: String!
+    # URL of the image
+    image: String!
 }
 
 # A tennis stadium
@@ -36,6 +38,8 @@ type Stadium {
     city: String!
     # The ground type (ex: grass, clay)
     surface: String!
+    # URL of the image
+    image: String!
 }
 
 # A tennis referee
@@ -44,6 +48,8 @@ type TennisReferee {
     id: ID!
     # The full name of the referee
     name: String!
+    # URL of the image
+    image: String!
 }
 
 # A set is gained by having at least 6 games and 2 over the opponent

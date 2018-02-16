@@ -19,3 +19,8 @@ func (r *PlayerResolver) ID() graphql.ID {
 func (r *PlayerResolver) Name() string {
 	return r.player.Name
 }
+
+// Image : URL of the image
+func (r *PlayerResolver) Image() string {
+	return r.player.Image
+}

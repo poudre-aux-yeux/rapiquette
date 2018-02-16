@@ -19,3 +19,8 @@ func (r *TennisRefereeResolver) ID() graphql.ID {
 func (r *TennisRefereeResolver) Name() string {
 	return r.ref.Name
 }
+
+// Image : URL of the image
+func (r *TennisRefereeResolver) Image() string {
+	return r.ref.Image
+}

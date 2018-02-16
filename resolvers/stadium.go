@@ -29,3 +29,8 @@ func (r *StadiumResolver) City() string {
 func (r *StadiumResolver) Surface() string {
 	return r.stadium.GroundType
 }
+
+// Image : URL of the image
+func (r *StadiumResolver) Image() string {
+	return r.stadium.Image
+}

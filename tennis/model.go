@@ -51,8 +51,9 @@ type Score struct {
 
 // Player : tennis player
 type Player struct {
-	ID   graphql.ID `json:"id"`
-	Name string     `json:"name"`
+	ID    graphql.ID `json:"id"`
+	Name  string     `json:"name"`
+	Image string     `json:"image"`
 }
 
 // Stadium : metadata about a stadium
@@ -61,12 +62,14 @@ type Stadium struct {
 	GroundType string     `json:"surface"`
 	Name       string     `json:"name"`
 	City       string     `json:"city"`
+	Image      string     `json:"image"`
 }
 
 // Referee : tennis referee
 type Referee struct {
-	ID   graphql.ID `json:"id"`
-	Name string     `json:"name"`
+	ID    graphql.ID `json:"id"`
+	Name  string     `json:"name"`
+	Image string     `json:"image"`
 }
 
 // Set : a set of games
