@@ -24,3 +24,28 @@ func (r *PlayerResolver) Name() string {
 func (r *PlayerResolver) Image() string {
 	return r.player.Image
 }
+
+// Birth : date of birth
+func (r *PlayerResolver) Birth() graphql.Time {
+	return r.player.Birth
+}
+
+// Weight : weight in kilograms
+func (r *PlayerResolver) Weight() *int32 {
+	return r.player.Weight
+}
+
+// Ranking : ATP ranking
+func (r *PlayerResolver) Ranking() *int32 {
+	return r.player.Ranking
+}
+
+// Titles : number of titles won
+func (r *PlayerResolver) Titles() *int32 {
+	return r.player.Titles
+}
+
+// Height :height in centimeters
+func (r *PlayerResolver) Height() *int32 {
+	return r.player.Height
+}

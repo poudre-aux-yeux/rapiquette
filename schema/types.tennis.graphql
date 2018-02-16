@@ -26,6 +26,16 @@ type Player {
     name: String!
     # URL of the image
     image: String!
+    # Birthday
+    birth: Time!
+    # Weight in kilograms
+    weight: Int
+    # ATP ranking
+    ranking: Int
+    # Number of won titles
+    titles: Int
+    # Height in centimeters
+    height: Int
 }
 
 # A tennis stadium

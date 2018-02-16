@@ -5,21 +5,6 @@ import (
 	graphql "github.com/neelance/graphql-go"
 )
 
-// Match : metadata about a match
-type Match struct {
-	ID               graphql.ID   `json:"id"`
-	HomePlayersLinks []graphql.ID `json:"homePlayers"`
-	AwayPlayersLinks []graphql.ID `json:"awayPlayers"`
-	StdLink          graphql.ID   `json:"stadium"`
-	RefLink          graphql.ID   `json:"referee"`
-	Date             graphql.Time `json:"date"`
-	HomePlayers      []*Player
-	AwayPlayers      []*Player
-	Std              *Stadium
-	Ref              *Referee
-	Score
-}
-
 // GetType returns the type of the struct
 func (s *Match) GetType() string {
 	return "Match"
@@ -40,6 +25,21 @@ func (s *Stadium) GetType() string {
 	return "Stadium"
 }
 
+// Match : metadata about a match
+type Match struct {
+	ID               graphql.ID   `json:"id"`
+	HomePlayersLinks []graphql.ID `json:"homePlayers"`
+	AwayPlayersLinks []graphql.ID `json:"awayPlayers"`
+	StdLink          graphql.ID   `json:"stadium"`
+	RefLink          graphql.ID   `json:"referee"`
+	Date             graphql.Time `json:"date"`
+	HomePlayers      []*Player
+	AwayPlayers      []*Player
+	Std              *Stadium
+	Ref              *Referee
+	Score
+}
+
 // Score : current score of a match
 type Score struct {
 	Sets []*Set `json:"sets"`
@@ -51,9 +51,14 @@ type Score struct {
 
 // Player : tennis player
 type Player struct {
-	ID    graphql.ID `json:"id"`
-	Name  string     `json:"name"`
-	Image string     `json:"image"`
+	ID      graphql.ID   `json:"id"`
+	Name    string       `json:"name"`
+	Image   string       `json:"image"`
+	Birth   graphql.Time `json:"birth"`
+	Weight  *int32       `json:"weight"`
+	Ranking *int32       `json:"ranking"`
+	Titles  *int32       `json:"titles"`
+	Height  *int32       `json:"height"`
 }
 
 // Stadium : metadata about a stadium
