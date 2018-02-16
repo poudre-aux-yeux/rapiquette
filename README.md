@@ -26,11 +26,21 @@ programming language created at Google.
 It uses the standard library, the
 [neelance/graphql-go](https://github.com/neelance/graphql-go) GraphQL framework
 and the [Redigo](https://github.com/garyburd/redigo) Redis client.
-[GraphQL](https://graphql.org) is a Query Language for APIs, and aims to replace
-RESTful APIs.
+[GraphQL](https://graphql.org) is a Query Language for APIs, and aims to
+replace RESTful APIs.
 [Redis](https://redis.io/) is an in-memory key-value store.
 
 # Getting started
+
+## Requirements
+
+You need to have [Docker](https://docs.docker.com/install/) (> 17.05) installed
+and running to use Docker Compose with this repository.
+
+You also need to have a [Go](https://golang.org/doc/install) installation.
+
+The repository needs to be located at
+`$GOPATH/src/github.com/poudre-aux-yeux/rapiquette` or else it won't compile.
 
 ## Run the API
 
@@ -200,7 +210,13 @@ mutation CreateNewMatch(
   $referee: ID!,
   $stadium: ID!
 ) {
-  createMatch(date: $date, homePlayers: $homePlayers, awayPlayers: $awayPlayers, referee: $referee, stadium: $stadium) {
+  createMatch(
+    date: $date,
+    homePlayers: $homePlayers,
+    awayPlayers: $awayPlayers,
+    referee: $referee,
+    stadium: $stadium
+  ) {
     id
     date
     stadium {

@@ -28,7 +28,12 @@ const (
 // Get everything ready in for a fresh clone
 func Setup() {
 	fmt.Println("setting rapiquette up...")
-	mg.Deps(GetGoGenerate, Schema, GetDep, Vendor, GetGoimports, Imports, Build)
+	mg.Deps(GetGoGenerate, GetDep, GetGoimports)
+	mg.Deps(Schema)
+	mg.Deps(Vendor, Imports)
+	fmt.Println("formatted the code")
+	mg.Deps(Build)
+	fmt.Println("generated the executable")
 }
 
 // Install golang/dep
@@ -80,7 +85,9 @@ func Schema() error {
 	cmd := exec.Command(goexe, "generate")
 	cmd.Dir = "./schema"
 	out, err := cmd.Output()
-	fmt.Println(string(out), err)
+	if out != nil && len(out) > 0 && err != nil {
+		fmt.Println(string(out), err)
+	}
 	if err == nil {
 		fmt.Println("generated the GraphQL schema")
 	}
@@ -162,7 +169,7 @@ func GetGoimports() error {
 		return err
 	}
 
-	fmt.Println("installed go generate")
+	fmt.Println("installed goimports")
 	return nil
 }
 
