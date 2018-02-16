@@ -48,17 +48,17 @@ The repository needs to be located at
 docker-compose up
 ```
 
-## DEBUG
+## Debugging
 
-Get and build the dependencies:
+Get the repository ready for building:
 
 ``` sh
 # Install mage
 go get -u github.com/magefile/mage
-# Initialize the application
+# Initialize the repo
 mage setup
 
-# Check all available commands
+# Note : Check all available 'mage' commands
 mage -l
 ```
 
@@ -106,6 +106,14 @@ To use it run `docker-compose up` and browse `http://localhost:3333`.
 [Apollo](https://www.apollographql.com) provides GraphQL clients for React,
 Vue.js, Angular, Android, iOS and other frontend platforms.
 It is a good choice to query this API with an Apollo Client.
+
+## Other clients
+
+Check the "official" list at http://graphql.org/code/#graphql-clients
+
+## Custom client
+
+[GraphQL clients documentation](http://graphql.org/graphql-js/graphql-clients/)
 
 ## Examples
 
