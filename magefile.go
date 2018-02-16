@@ -16,8 +16,8 @@ import (
 )
 
 var Aliases = map[string]interface{}{
-// "buildci":  BuildCI,
-// "vendorci": VendorCI,
+	"build-ci":  BuildCI,
+	"vendor-ci": VendorCI,
 }
 
 const (
@@ -92,6 +92,7 @@ func Build() error {
 	return sh.Run(goexe, "build", "-o", binary)
 }
 
+// Build the app for linux am64
 func BuildCI() error {
 	args := make(map[string]string)
 	args["GOOS"] = "linux"

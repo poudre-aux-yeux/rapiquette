@@ -44,7 +44,7 @@ Get and build the dependencies:
 
 ``` sh
 # Install mage
-go get -u -d github.com/magefile/mage
+go get -u github.com/magefile/mage
 # Initialize the application
 mage setup
 

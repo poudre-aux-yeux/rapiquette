@@ -2,7 +2,7 @@ FROM golang:latest as builder
 
 WORKDIR /go/src/github.com/poudre-aux-yeux/rapiquette
 COPY . .
-RUN go get -u -d github.com/magefile/mage
+RUN go get -u github.com/magefile/mage
 RUN mage getgogenerate
 RUN mage schema
 RUN mage getdep
