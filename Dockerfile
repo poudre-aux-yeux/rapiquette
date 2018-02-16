@@ -2,11 +2,12 @@ FROM golang:latest as builder
 
 WORKDIR /go/src/github.com/poudre-aux-yeux/rapiquette
 COPY . .
-RUN go get -u github.com/jteeuwen/go-bindata/...
-RUN go get -u github.com/golang/dep/cmd/dep
-RUN cd schema && go generate
-RUN dep ensure -vendor-only
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o rapiquette
+RUN go get -u -d github.com/magefile/mage
+RUN mage getgogenerate
+RUN mage schema
+RUN mage getdep
+RUN mage vendorci
+RUN mage buildci
 
 FROM alpine
 

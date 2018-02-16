@@ -11,6 +11,16 @@
   version = "v1.5.0"
 
 [[projects]]
+  name = "github.com/magefile/mage"
+  packages = [
+    "mg",
+    "sh",
+    "types"
+  ]
+  revision = "ab3ca2f6f85577d7ec82e0a6df721147a2e737f9"
+  version = "v2.0.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/neelance/graphql-go"
   packages = [
@@ -55,6 +65,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "acde647217bc84a12575d9d3fcb3ffe331289ace861301f8fbf9d39f63d4e4e8"
+  inputs-digest = "17e877a2cf7faf9c0be1a5e6af7c9b99afffb0a7fb29e2fefee859194559625b"
   solver-name = "gps-cdcl"
   solver-version = 1

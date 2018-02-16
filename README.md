@@ -43,21 +43,19 @@ docker-compose up
 Get and build the dependencies:
 
 ``` sh
-# Install go generate
-go get -u github.com/jteeuwen/go-bindata/...
-go get -u github.com/golang/dep/cmd/dep
-# Generate the schema builder
-cd schema && go generate && cd ..
-# Install the dependencies
-dep ensure
-# If using cmd.exe, omit the './'
-./build.sh
+# Install mage
+go get -u -d github.com/magefile/mage
+# Initialize the application
+mage setup
+
+# Check all available commands
+mage -l
 ```
 
 Start the databases:
 
 ``` sh
-docker-compose up tennis-redis raquette-redis
+mage databases
 ```
 
 Start the API:
