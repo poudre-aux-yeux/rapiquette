@@ -164,7 +164,7 @@ func packages() ([]string, error) {
 
 // Install goimports
 func GetGoimports() error {
-	if err := sh.Run(goexe, "get", "-u", "github.com/jteeuwen/go-bindata/..."); err != nil {
+	if err := sh.Run(goexe, "get", "-u", "golang.org/x/tools/cmd/goimports"); err != nil {
 		fmt.Println("error installing go generate")
 		return err
 	}
