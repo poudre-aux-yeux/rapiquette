@@ -89,7 +89,7 @@ func Schema() error {
 
 // Build Build the app
 func Build() error {
-	return sh.Run(goexe, "build", "-o", binary)
+	return sh.Run(goexe, "build")
 }
 
 // Build the app for linux am64
@@ -236,5 +236,7 @@ func Vet() error {
 
 // Start the databases with docker compose
 func Databases() error {
+	os.Setenv("RAQUETTE_HOST", "localhost:6380")
+	os.Setenv("TENNIS_HOST", "localhost:6379")
 	return sh.Run("docker-compose", "up", "tennis-redis", "raquette-redis")
 }

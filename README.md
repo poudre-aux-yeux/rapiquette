@@ -52,40 +52,24 @@ mage setup
 mage -l
 ```
 
-Start the databases:
+Debug:
 
 ``` sh
+# This will run the 2 database containers and set the necessary env variables
 mage databases
-```
 
-Start the API:
-
-``` sh
+# Start the API
 # Unix
-RAQUETTE_HOST=localhost:6380
-TENNIS_HOST=localhost:6379
 ./rapiquette
-```
-
-``` powershell
-# Powershell
-$env:RAQUETTE_HOST="localhost:6380"
-$env:TENNIS_HOST="localhost:6379"
-.\rapiquette
-```
-
-``` batch
-:: cmd.exe
-SET RAQUETTE_HOST=localhost:6380
-SET TENNIS_HOST=localhost:6379
-rapiquette
+# Windows
+rapiquette.exe
 ```
 
 # Deploy
 
 Set the `GIN_MODE` environment variable to `release`.
 Set the `RAQUETTE_HOST` and `TENNIS_HOST` environment variables to your Redis
-location (can be the same instance or 2 different databases).
+location (can be the same instance or 2 distinct databases).
 
 Or just run `docker-compose up`.
 
