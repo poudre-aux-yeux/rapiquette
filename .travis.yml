@@ -4,15 +4,16 @@ services:
   - docker
 
 env:
-  - IMAGE_COMMIT_TAG=poudreauxyeux/rapiquette:$TRAVIS_COMMIT
-  - IMAGE_LATEST_TAG=poudreauxyeux/rapiquette:latest
+  - IMAGE_COMMIT_TAG="poudreauxyeux/rapiquette:$TRAVIS_COMMIT"
+  - IMAGE_LATEST_TAG="poudreauxyeux/rapiquette:latest"
 
 before_install:
+  - echo $IMAGE_COMMIT_TAG
+  - echo $IMAGE_LATEST_TAG
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
 script:
-  - docker build -t $IMAGE_COMMIT_TAG .
-  - docker tag $IMAGE_COMMIT_TAG $IMAGE_LATEST_TAG
+  - docker build -t $IMAGE_COMMIT_TAG -t $IMAGE_LATEST_TAG .
 
 after_success:
   - docker push $IMAGE_COMMIT_TAG
