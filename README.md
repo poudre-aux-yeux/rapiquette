@@ -126,6 +126,7 @@ mutation CreateNewPlayer($player: CreatePlayerInput!) {
     name
     image
     birth
+    nationality
     weight
     ranking
     titles
@@ -142,6 +143,7 @@ and the Query Variables:
     "name": "Thomas Sauvajon",
     "image": "https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAMABADGAAwAAQAAAAAAAAwuAAAAJDI0MTJkMmNiLThkYTQtNDhkMC1iNzM4LTdkNjcxYzc1Y2RlZA.jpg",
     "birth": "1993-04-10",
+    "nationality": "FRA",
     "weight": 72,
     "ranking": 999,
     "titles": 1,
@@ -159,6 +161,7 @@ query {
     name
     image
     birth
+    nationality
     weight
     ranking
     titles
@@ -176,6 +179,7 @@ query GetPlayerByID($id: ID!) {
     name
     image
     birth
+    nationality
     weight
     ranking
     titles
@@ -266,6 +270,7 @@ mutation CreateNewMatch(
       name
       image
       birth
+      nationality
       weight
       ranking
       titles
@@ -276,6 +281,7 @@ mutation CreateNewMatch(
       name
       image
       birth
+      nationality
       weight
       ranking
       titles

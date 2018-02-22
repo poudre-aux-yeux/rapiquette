@@ -17,6 +17,8 @@ input CreatePlayerInput {
     image: String!
     # Birthday
     birth: Time!
+    # Nationality (3 letters code)
+    nationality: String!
     # Weight in kilograms
     weight: Int!
     # Ranking

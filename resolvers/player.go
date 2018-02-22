@@ -30,6 +30,10 @@ func (r *PlayerResolver) Birth() graphql.Time {
 	return r.player.Birth
 }
 
+func (r *PlayerResolver) Nationality() string {
+	return r.player.Nationality
+}
+
 // Weight : weight in kilograms
 func (r *PlayerResolver) Weight() *int32 {
 	return r.player.Weight

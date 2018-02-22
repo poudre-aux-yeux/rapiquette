@@ -51,14 +51,15 @@ type Score struct {
 
 // Player : tennis player
 type Player struct {
-	ID      graphql.ID   `json:"id"`
-	Name    string       `json:"name"`
-	Image   string       `json:"image"`
-	Birth   graphql.Time `json:"birth"`
-	Weight  *int32       `json:"weight"`
-	Ranking *int32       `json:"ranking"`
-	Titles  *int32       `json:"titles"`
-	Height  *int32       `json:"height"`
+	ID          graphql.ID   `json:"id"`
+	Name        string       `json:"name"`
+	Image       string       `json:"image"`
+	Birth       graphql.Time `json:"birth"`
+	Nationality string       `json:"nationality"`
+	Weight      *int32       `json:"weight"`
+	Ranking     *int32       `json:"ranking"`
+	Titles      *int32       `json:"titles"`
+	Height      *int32       `json:"height"`
 }
 
 // Stadium : metadata about a stadium
