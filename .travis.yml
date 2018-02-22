@@ -1,0 +1,22 @@
+sudo: required
+
+language: go
+
+go:
+  - "1.9"
+  - master
+
+services:
+  - docker
+
+env:
+  - IMAGE=poudreauxyeux/rapiquette:$TRAVIS_COMMIT
+
+before_install:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+script:
+  - docker build -t $IMAGE .
+
+after_success:
+  - docker push $IMAGE
