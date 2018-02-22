@@ -124,6 +124,12 @@ mutation CreateNewPlayer($player: CreatePlayerInput!) {
   createPlayer(player: $player) {
     id
     name
+    image
+    birth
+    weight
+    ranking
+    titles
+    height
   }
 }
 ```
@@ -132,9 +138,15 @@ and the Query Variables:
 
 ``` graphql
 {
-    "player": {
-        "name": "Thomasauvajon"
-    }
+  "player": {
+    "name": "Thomas Sauvajon",
+    "image": "https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAMABADGAAwAAQAAAAAAAAwuAAAAJDI0MTJkMmNiLThkYTQtNDhkMC1iNzM4LTdkNjcxYzc1Y2RlZA.jpg",
+    "birth": "1993-04-10",
+    "weight": 72,
+    "ranking": 999,
+    "titles": 1,
+    "height": 175
+  }
 }
 ```
 
@@ -143,8 +155,14 @@ You can then query the players:
 ``` graphql
 query {
   players {
-    name
     id
+    name
+    image
+    birth
+    weight
+    ranking
+    titles
+    height
   }
 }
 ```
@@ -156,6 +174,12 @@ query GetPlayerByID($id: ID!) {
   player(id: $id) {
     id
     name
+    image
+    birth
+    weight
+    ranking
+    titles
+    height
   }
 }
 ```
@@ -240,10 +264,22 @@ mutation CreateNewMatch(
     homePlayers {
       id
       name
+      image
+      birth
+      weight
+      ranking
+      titles
+      height
     }
     awayPlayers {
       id
       name
+      image
+      birth
+      weight
+      ranking
+      titles
+      height
     }
   }
 }

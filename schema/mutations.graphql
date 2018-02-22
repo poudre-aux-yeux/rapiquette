@@ -1,8 +1,6 @@
 type Mutation {
     # Create a new match
     createMatch(date: Time!, homePlayers: [ID!]!, awayPlayers: [ID!]!, referee: ID!, stadium: ID!): Match
-    # Start a match
-    startMatch(id: ID!): Match
     # Create a new player
     createPlayer(player: CreatePlayerInput!): Player
     # Create a new tennis referee
@@ -15,6 +13,18 @@ type Mutation {
 input CreatePlayerInput {
     # The player's full name
     name: String!
+    # Mugshot URL
+    image: String!
+    # Birthday
+    birth: Time!
+    # Weight in kilograms
+    weight: Int!
+    # Ranking
+    ranking: Int!
+    # Number of titles
+    titles: Int!
+    # Height in centimeters
+    height: Int!
 }
 
 # Input required to create a new tennis referee

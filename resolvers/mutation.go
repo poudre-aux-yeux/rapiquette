@@ -25,9 +25,6 @@ type createTennisRefereeArgs struct {
 type createStadiumArgs struct {
 	Stadium tennis.Stadium
 }
-type startMatchArgs struct {
-	ID graphql.ID
-}
 
 // CreateMatch : mutation to create a match
 func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (*MatchResolver, error) {
@@ -111,14 +108,6 @@ func (r *RootResolver) CreateStadium(ctx context.Context, args *createStadiumArg
 	return &StadiumResolver{stadium: stadium}, err
 }
 
-// StartMatch : starts a match
-func (r *RootResolver) StartMatch(args *startMatchArgs) *MatchResolver {
-	// retrieve the match
-	match := tennis.Match{}
-	// start the match and update db
-	return &MatchResolver{match: match}
-}
-
 func (r *RootResolver) existsInSet(set string, key graphql.ID) error {
 	if ex, err := r.tennis.KeyExistsInSet(set, string(key)); err != nil {
 		return err
@@ -129,6 +118,7 @@ func (r *RootResolver) existsInSet(set string, key graphql.ID) error {
 	return nil
 }
 
+// checks if the array has no duplicate
 func containsUniqueKeys(keys []graphql.ID) bool {
 	kmap := make(map[graphql.ID]bool)
 	for _, key := range keys {
