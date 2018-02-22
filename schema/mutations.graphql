@@ -20,13 +20,13 @@ input CreatePlayerInput {
     # Nationality (3 letters code)
     nationality: String!
     # Weight in kilograms
-    weight: Int!
+    weight: Int
     # Ranking
-    ranking: Int!
+    ranking: Int
     # Number of titles
     titles: Int!
     # Height in centimeters
-    height: Int!
+    height: Int
 }
 
 # Input required to create a new tennis referee
