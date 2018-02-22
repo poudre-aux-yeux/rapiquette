@@ -4,13 +4,15 @@ services:
   - docker
 
 env:
-  - IMAGE=poudreauxyeux/rapiquette:$TRAVIS_COMMIT
+  - IMAGE_COMMIT=poudreauxyeux/rapiquette:$TRAVIS_COMMIT
+  - IMAGE_LATEST=poudreauxyeux/rapiquette:latest
 
 before_install:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
 script:
-  - docker build -t $IMAGE .
+  - docker build -t $IMAGE_COMMIT -t $IMAGE_LATEST .
 
 after_success:
-  - docker push $IMAGE
+  - docker push $IMAGE_COMMIT
+  - docker push $IMAGE_LATEST
