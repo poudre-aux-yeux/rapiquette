@@ -2,6 +2,12 @@
 
 raquette + API = rAPIquette
 
+Get the Docker image:
+
+```sh
+docker pull poudreauxyeux/rapiquette
+```
+
 # Ecosystem
 
 **Back-end:**
@@ -37,7 +43,8 @@ replace RESTful APIs.
 You need to have [Docker](https://docs.docker.com/install/) (> 17.05) installed
 and running to use Docker Compose with this repository.
 
-You also need to have a [Go](https://golang.org/doc/install) installation.
+You also need to have a [Go](https://golang.org/doc/install) installation
+if you want to build the repository.
 
 The repository needs to be located at
 `$GOPATH/src/github.com/poudre-aux-yeux/rapiquette` or else it won't compile.
