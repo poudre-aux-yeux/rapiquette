@@ -1,4 +1,4 @@
-FROM golang:latest as builder
+FROM golang:1.10 as builder
 
 WORKDIR /go/src/github.com/poudre-aux-yeux/rapiquette
 COPY . .
@@ -9,7 +9,7 @@ RUN mage getdep
 RUN mage vendorci
 RUN mage buildci
 
-FROM alpine
+FROM alpine:3.7
 
 WORKDIR /root/
 COPY --from=builder /go/src/github.com/poudre-aux-yeux/rapiquette/rapiquette .
