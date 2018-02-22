@@ -245,5 +245,5 @@ func Vet() error {
 func Databases() error {
 	os.Setenv("RAQUETTE_HOST", "localhost:6380")
 	os.Setenv("TENNIS_HOST", "localhost:6379")
-	return sh.Run("docker-compose", "up", "tennis-redis", "raquette-redis")
+	return sh.Run("docker-compose", "up", "-d", "tennis-redis", "raquette-redis", )
 }
