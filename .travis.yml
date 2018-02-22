@@ -11,9 +11,8 @@ before_install:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
 script:
-  - echo $IMAGE_COMMIT_TAG
-  - echo $IMAGE_LATEST_TAG
-  - docker build -t $IMAGE_COMMIT_TAG -t $IMAGE_LATEST_TAG .
+  - docker build -t $IMAGE_COMMIT_TAG .
+  - docker tag $IMAGE_COMMIT_TAG $IMAGE_LATEST_TAG
 
 after_success:
   - docker push $IMAGE_COMMIT_TAG
