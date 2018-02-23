@@ -147,7 +147,7 @@ and the Query Variables:
 ``` graphql
 {
   "player": {
-    "name": "Thomas Sauvajon",
+    "name": "Somas Thauvajon",
     "image": "https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAMABADGAAwAAQAAAAAAAAwuAAAAJDI0MTJkMmNiLThkYTQtNDhkMC1iNzM4LTdkNjcxYzc1Y2RlZA.jpg",
     "birth": "1993-04-10T00:00:00Z",
     "nationality": "FRA",
@@ -159,7 +159,7 @@ and the Query Variables:
 }
 ```
 
-You can then query the players:
+You can then query all the players:
 
 ``` graphql
 query {
@@ -200,6 +200,39 @@ with the Query Variables:
 ``` graphql
 {
   	"id": "10Abbwj2Zg8sETDPUq99I52FiuA"
+}
+```
+
+You can also update an existing player:
+
+``` graphql
+mutation UpdateExistingPlayer($player: UpdatePlayerInput!) {
+  updatePlayer(player: $player) {
+    id
+    name
+    image
+    birth
+    nationality
+    weight
+    ranking
+    titles
+    height
+  }
+}
+
+# Query variables
+{
+  "player": {
+    "id": "10wl445Jm4nsiFsvZ7JRGIRRA2T",
+    "name": "Buillaume GAECHLER",
+    "image": "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAASvAAAAJDQyOTA5MjYwLWQ1OTEtNDEwNS1hYjc4LWJjZmJjYmY5MTM1Yw.jpg",
+    "birth": "1996-06-28T00:00:00Z",
+    "nationality": "FRA",
+    "weight": 60,
+    "ranking": 988,
+    "titles": 1,
+    "height": 190
+  }
 }
 ```
 
