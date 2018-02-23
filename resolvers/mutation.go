@@ -17,7 +17,29 @@ type createMatchArgs struct {
 	Stadium     graphql.ID
 }
 type createPlayerArgs struct {
-	Player tennis.Player
+	Player struct {
+		Name        string       `json:"name"`
+		Image       string       `json:"image"`
+		Birth       graphql.Time `json:"birth"`
+		Nationality string       `json:"nationality"`
+		Weight      float64      `json:"weight"`
+		Ranking     float64      `json:"ranking"`
+		Titles      float64      `json:"titles"`
+		Height      float64      `json:"height"`
+	} `json:"player"`
+}
+type updatePlayerArgs struct {
+	Player struct {
+		ID          graphql.ID   `json:"id"`
+		Name        string       `json:"name"`
+		Image       string       `json:"image"`
+		Birth       graphql.Time `json:"birth"`
+		Nationality string       `json:"nationality"`
+		Weight      float64      `json:"weight"`
+		Ranking     float64      `json:"ranking"`
+		Titles      float64      `json:"titles"`
+		Height      float64      `json:"height"`
+	} `json:"player"`
 }
 type createTennisRefereeArgs struct {
 	Referee tennis.Referee
@@ -89,7 +111,21 @@ func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (
 
 // CreatePlayer creates a new Player and returns it
 func (r *RootResolver) CreatePlayer(ctx context.Context, args *createPlayerArgs) (*PlayerResolver, error) {
-	player, err := r.tennis.CreatePlayer(args.Player)
+	weight := int32(args.Player.Weight)
+	ranking := int32(args.Player.Ranking)
+	titles := int32(args.Player.Titles)
+	height := int32(args.Player.Height)
+	p := tennis.Player{
+		Name:        args.Player.Name,
+		Image:       args.Player.Image,
+		Birth:       args.Player.Birth,
+		Nationality: args.Player.Nationality,
+		Weight:      &weight,
+		Ranking:     &ranking,
+		Titles:      &titles,
+		Height:      &height,
+	}
+	player, err := r.tennis.CreatePlayer(p)
 
 	return &PlayerResolver{player: player}, err
 }

@@ -30,6 +30,7 @@ func (r *PlayerResolver) Birth() graphql.Time {
 	return r.player.Birth
 }
 
+// Nationality : 3 letters country code
 func (r *PlayerResolver) Nationality() string {
 	return r.player.Nationality
 }

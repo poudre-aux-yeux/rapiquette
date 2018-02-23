@@ -149,7 +149,7 @@ and the Query Variables:
   "player": {
     "name": "Thomas Sauvajon",
     "image": "https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAMABADGAAwAAQAAAAAAAAwuAAAAJDI0MTJkMmNiLThkYTQtNDhkMC1iNzM4LTdkNjcxYzc1Y2RlZA.jpg",
-    "birth": "1993-04-10",
+    "birth": "1993-04-10T00:00:00Z",
     "nationality": "FRA",
     "weight": 72,
     "ranking": 999,

@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	graphql "github.com/neelance/graphql-go"
-	"github.com/poudre-aux-yeux/rapiquette/tennis"
 )
 
 type queryArgs struct {
@@ -152,15 +151,15 @@ func (r *RootResolver) TennisReferee(ctx context.Context, args *queryArgs) (*Ten
 // Set : resolves the Set query
 func (r *RootResolver) Set(ctx context.Context, args *queryArgs) (*SetResolver, error) {
 	panic("not implemented")
-	set := tennis.Set{}
-	return &SetResolver{set: set}, ErrNotImplemented
+	// set := tennis.Set{}
+	// return &SetResolver{set: set}, ErrNotImplemented
 }
 
 // Game : resolves the Game query
 func (r *RootResolver) Game(ctx context.Context, args *queryArgs) (*GameResolver, error) {
 	panic("not implemented")
-	game := tennis.Game{}
-	return &GameResolver{game: game}, ErrNotImplemented
+	// game := tennis.Game{}
+	// return &GameResolver{game: game}, ErrNotImplemented
 }
 
 // Admin : resolves the Admin query
@@ -210,5 +209,5 @@ func (r *RootResolver) TennisSearch(ctx context.Context, args *searchArgs) ([]*S
 	// TODO : search stadiums, refs and players with Redis
 	// TODO : add all matches with stadiums, refs and players found
 	panic("not implemented")
-	return nil, ErrNotImplemented
+	// return nil, ErrNotImplemented
 }
