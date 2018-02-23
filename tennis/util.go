@@ -6,7 +6,7 @@ import (
 )
 
 // Create adds an item to the key-value store
-func (c Client) Create(item interface{}, id, set string) error {
+func (c *Client) Create(item interface{}, id, set string) error {
 	data, err := json.Marshal(item)
 
 	if err != nil {
@@ -25,11 +25,11 @@ func (c Client) Create(item interface{}, id, set string) error {
 }
 
 // KeyExists checks if the key exists in the key-value store
-func (c Client) KeyExists(key string) (bool, error) {
+func (c *Client) KeyExists(key string) (bool, error) {
 	return c.redis.Exists(key)
 }
 
 // KeyExistsInSet checks if the key exists in the set
-func (c Client) KeyExistsInSet(set, key string) (bool, error) {
+func (c *Client) KeyExistsInSet(set, key string) (bool, error) {
 	return c.redis.ExistsInSet(set, key)
 }

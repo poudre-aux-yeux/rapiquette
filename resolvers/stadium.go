@@ -7,7 +7,7 @@ import (
 
 // StadiumResolver : resolves tennis.Stadium
 type StadiumResolver struct {
-	stadium tennis.Stadium
+	stadium *tennis.Stadium
 }
 
 // ID : resolves the ID

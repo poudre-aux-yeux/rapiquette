@@ -7,7 +7,7 @@ import (
 
 // PlayerResolver : resolves tennis.Player
 type PlayerResolver struct {
-	player tennis.Player
+	player *tennis.Player
 }
 
 // ID : resolves the ID

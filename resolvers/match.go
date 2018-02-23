@@ -11,7 +11,7 @@ import (
 
 // MatchResolver : resolves tennis.Match
 type MatchResolver struct {
-	match  tennis.Match
+	match  *tennis.Match
 	tennis *tennis.Client
 }
 

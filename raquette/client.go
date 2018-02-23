@@ -29,7 +29,7 @@ func New(redis *kvs.Redis) (*Client, error) {
 }
 
 // GetAllReferees : Return every referee
-func (c Client) GetAllReferees() ([]*Referee, error) {
+func (c *Client) GetAllReferees() ([]*Referee, error) {
 	var referee Referee
 	keys, err := c.redis.GetSetMembers(referee.GetType())
 
@@ -53,7 +53,7 @@ func (c Client) GetAllReferees() ([]*Referee, error) {
 }
 
 // GetAllAdmins : Return every admin
-func (c Client) GetAllAdmins() ([]*Admin, error) {
+func (c *Client) GetAllAdmins() ([]*Admin, error) {
 	var admin Admin
 	keys, err := c.redis.GetSetMembers(admin.GetType())
 
@@ -77,7 +77,7 @@ func (c Client) GetAllAdmins() ([]*Admin, error) {
 }
 
 // GetAdminByID : Finds a Admin in the key-value store
-func (c Client) GetAdminByID(id graphql.ID) (*Admin, error) {
+func (c *Client) GetAdminByID(id graphql.ID) (*Admin, error) {
 	data, err := c.redis.Get(string(id))
 
 	if err != nil {
@@ -94,7 +94,7 @@ func (c Client) GetAdminByID(id graphql.ID) (*Admin, error) {
 }
 
 // GetRefereeByID : Finds a Referee in the key-value store
-func (c Client) GetRefereeByID(id graphql.ID) (*Referee, error) {
+func (c *Client) GetRefereeByID(id graphql.ID) (*Referee, error) {
 	data, err := c.redis.Get(string(id))
 
 	if err != nil {
