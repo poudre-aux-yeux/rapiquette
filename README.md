@@ -10,6 +10,9 @@ docker pull poudreauxyeux/rapiquette
 
 # Ecosystem
 
+**Main repo:**
+[Matte Ma Raquette](https://github.com/poudre-aux-yeux/matte-ma-raquette/)
+
 **Back-end:**
 
 [rAPIquette](https://github.com/poudre-aux-yeux/rapiquette): GraphQL API
