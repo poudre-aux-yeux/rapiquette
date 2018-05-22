@@ -10,6 +10,8 @@ import (
 	"github.com/segmentio/ksuid"
 )
 
+var ErrNotFound = errors.New("not found")
+
 // Client is a client to fetch raquette data
 type Client struct {
 	redis *kvs.Redis
@@ -74,6 +76,54 @@ func (c *Client) GetAllAdmins() ([]*Admin, error) {
 	}
 
 	return admins, nil
+}
+
+// GetAdminByUsername finds and returns an administrator by their username
+func (c *Client) GetAdminByUsername(username string) (*Admin, error) {
+	var admin Admin
+	keys, err := c.redis.GetSetMembers(admin.GetType())
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, key := range keys {
+		a, err := c.GetAdminByID(graphql.ID(key))
+
+		if err != nil {
+			fmt.Printf("error getting item %v: %v\n", key, err)
+		}
+
+		if a.Username == username {
+			return a, nil
+		}
+	}
+
+	return nil, ErrNotFound
+}
+
+// GetRefereeByUsername finds and returns a referee by their username
+func (c *Client) GetRefereeByUsername(username string) (*Referee, error) {
+	var ref Referee
+	keys, err := c.redis.GetSetMembers(ref.GetType())
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, key := range keys {
+		r, err := c.GetRefereeByID(graphql.ID(key))
+
+		if err != nil {
+			fmt.Printf("error getting item %v: %v\n", key, err)
+		}
+
+		if r.Username == username {
+			return r, nil
+		}
+	}
+
+	return nil, ErrNotFound
 }
 
 // GetAdminByID : Finds a Admin in the key-value store

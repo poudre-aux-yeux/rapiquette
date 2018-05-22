@@ -14,6 +14,14 @@ type User interface {
 	Email() string
 }
 
+// SimpleUser : an user without any particular right
+type SimpleUser struct {
+	ID           graphql.ID `json:"id"`
+	PasswordHash string     `json:"hash"`
+	Username     string     `json:"username"`
+	Email        string     `json:"email"`
+}
+
 // Admin : manages the application
 type Admin struct {
 	ID           graphql.ID `json:"id"`
@@ -40,4 +48,9 @@ func (s *Admin) GetType() string {
 // GetType returns the type of the struct
 func (s *Referee) GetType() string {
 	return "Referee"
+}
+
+// GetType returns the type of the struct
+func (s *SimpleUser) GetType() string {
+	return "SimpleUser"
 }

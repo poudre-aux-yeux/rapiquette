@@ -1,13 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	graphql "github.com/neelance/graphql-go"
+	"github.com/poudre-aux-yeux/rapiquette/auth"
 	"github.com/poudre-aux-yeux/rapiquette/handler"
 	"github.com/poudre-aux-yeux/rapiquette/kvs"
 	"github.com/poudre-aux-yeux/rapiquette/raquette"
@@ -88,8 +91,45 @@ func (app *App) initializeRoutes() {
 	mux.Handle("/", handler.GraphiQL{})
 	mux.Handle("/graphql", app.GraphQL)
 	mux.Handle("/graphql/", app.GraphQL)
+	mux.HandleFunc("/login", app.loginFunc)
 
 	app.Server.Handler = mux
+}
+
+func (app *App) loginFunc(w http.ResponseWriter, req *http.Request) {
+	var jwtSecret = "secretodelavega"
+	decoder := json.NewDecoder(req.Body)
+	payload := auth.LoginPayload{}
+	err := decoder.Decode(&payload)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	defer req.Body.Close()
+
+	fmt.Println(payload)
+	user, err := auth.ConfirmLogin(&payload, app.Raquette)
+	if err != nil {
+		http.Error(w, "invalid login", http.StatusUnauthorized)
+		return
+	}
+
+	expires := time.Now().Add(time.Hour * 1).Unix()
+	claims := auth.Claims{
+		user.ID,
+		true,
+		false,
+		jwt.StandardClaims{
+			ExpiresAt: expires,
+			Issuer:    "rapiquette",
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	signedToken, _ := token.SignedString(jwtSecret)
+	tokenResponse := struct {
+		Token string `json:"token"`
+	}{signedToken}
+	json.NewEncoder(w).Encode(tokenResponse)
 }
 
 // Initialize the application
