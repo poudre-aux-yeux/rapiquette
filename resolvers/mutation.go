@@ -188,22 +188,19 @@ func (r *RootResolver) CreatePlayer(ctx context.Context, args *createPlayerArgs)
 	titles := int32(args.Player.Titles)
 
 	var (
-		weight, ranking, height *int32
+		weight, ranking, height int32
 	)
 
 	if args.Player.Weight != nil {
-		weight32 := int32(*args.Player.Weight)
-		weight = &weight32
+		weight = int32(*args.Player.Weight)
 	}
 
 	if args.Player.Ranking != nil {
-		ranking32 := int32(*args.Player.Ranking)
-		ranking = &ranking32
+		ranking = int32(*args.Player.Ranking)
 	}
 
 	if args.Player.Height != nil {
-		height32 := int32(*args.Player.Height)
-		height = &height32
+		height = int32(*args.Player.Height)
 	}
 
 	p := tennis.Player{
@@ -211,10 +208,10 @@ func (r *RootResolver) CreatePlayer(ctx context.Context, args *createPlayerArgs)
 		Image:       args.Player.Image,
 		Birth:       args.Player.Birth,
 		Nationality: args.Player.Nationality,
-		Weight:      weight,
-		Ranking:     ranking,
+		Weight:      &weight,
+		Ranking:     &ranking,
 		Titles:      &titles,
-		Height:      height,
+		Height:      &height,
 	}
 
 	player, err := r.tennis.CreatePlayer(p)
@@ -227,22 +224,19 @@ func (r *RootResolver) UpdatePlayer(ctx context.Context, args *updatePlayerArgs)
 	titles := int32(args.Player.Titles)
 
 	var (
-		weight, ranking, height *int32
+		weight, ranking, height int32
 	)
 
 	if args.Player.Weight != nil {
-		weight32 := int32(*args.Player.Weight)
-		weight = &weight32
+		weight = int32(*args.Player.Weight)
 	}
 
 	if args.Player.Ranking != nil {
-		ranking32 := int32(*args.Player.Ranking)
-		ranking = &ranking32
+		ranking = int32(*args.Player.Ranking)
 	}
 
 	if args.Player.Height != nil {
-		height32 := int32(*args.Player.Height)
-		height = &height32
+		height = int32(*args.Player.Height)
 	}
 
 	p := tennis.Player{
@@ -251,10 +245,10 @@ func (r *RootResolver) UpdatePlayer(ctx context.Context, args *updatePlayerArgs)
 		Image:       args.Player.Image,
 		Birth:       args.Player.Birth,
 		Nationality: args.Player.Nationality,
-		Weight:      weight,
-		Ranking:     ranking,
+		Weight:      &weight,
+		Ranking:     &ranking,
 		Titles:      &titles,
-		Height:      height,
+		Height:      &height,
 	}
 	player, err := r.tennis.UpdatePlayer(p)
 
