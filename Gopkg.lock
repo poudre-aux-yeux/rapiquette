@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/dgrijalva/jwt-go"
+  packages = ["."]
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
+
+[[projects]]
   name = "github.com/garyburd/redigo"
   packages = [
     "internal",
@@ -65,6 +71,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "17e877a2cf7faf9c0be1a5e6af7c9b99afffb0a7fb29e2fefee859194559625b"
+  inputs-digest = "5d05d961363a8865f2e479b9b0f9947eb1e162e360157e539d9364f3e567eac5"
   solver-name = "gps-cdcl"
   solver-version = 1

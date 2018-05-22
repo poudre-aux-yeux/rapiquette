@@ -10,6 +10,7 @@ import (
 	"github.com/segmentio/ksuid"
 )
 
+// ErrNotFound : a key was not found in the kvs
 var ErrNotFound = errors.New("not found")
 
 // Client is a client to fetch raquette data
