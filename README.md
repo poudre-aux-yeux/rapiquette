@@ -36,7 +36,7 @@ matches, stadiums ...
 The back-end is developped in [Go](https://golang.org/), an open-source
 programming language created at Google.
 It uses the standard library, the
-[graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go) GraphQL framework
+[poudre-aux-yeux/graphql-go](https://github.com/poudre-aux-yeux/graphql-go) GraphQL framework
 and the [Redigo](https://github.com/garyburd/redigo) Redis client.
 [GraphQL](https://graphql.org) is a Query Language for APIs, and aims to
 replace RESTful APIs.
@@ -61,7 +61,7 @@ The repository needs to be located at
 docker-compose up
 ```
 
-## Debugging
+## Debugging / Development
 
 Get the repository ready for building:
 
