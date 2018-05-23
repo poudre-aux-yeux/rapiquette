@@ -1,5 +1,8 @@
 # rAPIquette
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/poudre-aux-yeux/rapiquette)](https://goreportcard.com/report/github.com/poudre-aux-yeux/rapiquette)
+[![GoDoc](https://camo.githubusercontent.com/ac30242392a5470effdd2b008d7be055b6f6f8d6/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f676f646f632d7265666572656e63652d626c75652e7376673f7374796c653d666c61742d737175617265)](https://godoc.org/github.com/poudre-aux-yeux/rapiquette)
+
 raquette + API = rAPIquette
 
 Get the Docker image:
