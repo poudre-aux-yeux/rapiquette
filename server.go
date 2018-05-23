@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	graphql "github.com/neelance/graphql-go"
+	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/auth"
 	"github.com/poudre-aux-yeux/rapiquette/handler"
 	"github.com/poudre-aux-yeux/rapiquette/kvs"

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"sync"
 
-	graphql "github.com/neelance/graphql-go"
+	graphql "github.com/graph-gophers/graphql-go"
 )
 
 // A query represents a single GraphQL query.

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	graphql "github.com/neelance/graphql-go"
+	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
 )
 

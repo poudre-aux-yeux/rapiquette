@@ -31,7 +31,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/neelance/graphql-go"
+  name = "github.com/graph-gophers/graphql-go"
 
 [[constraint]]
   name = "github.com/segmentio/ksuid"

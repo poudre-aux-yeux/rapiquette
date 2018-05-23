@@ -17,18 +17,8 @@
   version = "v1.5.0"
 
 [[projects]]
-  name = "github.com/magefile/mage"
-  packages = [
-    "mg",
-    "sh",
-    "types"
-  ]
-  revision = "ab3ca2f6f85577d7ec82e0a6df721147a2e737f9"
-  version = "v2.0.1"
-
-[[projects]]
   branch = "master"
-  name = "github.com/neelance/graphql-go"
+  name = "github.com/graph-gophers/graphql-go"
   packages = [
     ".",
     "errors",
@@ -44,7 +34,17 @@
     "log",
     "trace"
   ]
-  revision = "b46637030579abd312c5eea21d36845b6e9e7ca4"
+  revision = "e698b6abc17ead17ea89d3d22a4b2625299701e3"
+
+[[projects]]
+  name = "github.com/magefile/mage"
+  packages = [
+    "mg",
+    "sh",
+    "types"
+  ]
+  revision = "ab3ca2f6f85577d7ec82e0a6df721147a2e737f9"
+  version = "v2.0.1"
 
 [[projects]]
   name = "github.com/opentracing/opentracing-go"
@@ -71,6 +71,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5d05d961363a8865f2e479b9b0f9947eb1e162e360157e539d9364f3e567eac5"
+  inputs-digest = "d2d8904ffb105928d4f7b708dcd9f8f4d256ce74303d19a62d0b9fc4ae783fe3"
   solver-name = "gps-cdcl"
   solver-version = 1
