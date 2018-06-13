@@ -9,7 +9,8 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	graphql "github.com/graph-gophers/graphql-go"
+	graphql "github.com/poudre-aux-yeux/graphql-go"
+	"github.com/poudre-aux-yeux/graphql-go/relay"
 	"github.com/poudre-aux-yeux/rapiquette/auth"
 	"github.com/poudre-aux-yeux/rapiquette/handler"
 	"github.com/poudre-aux-yeux/rapiquette/kvs"
@@ -22,7 +23,7 @@ import (
 // App is the API for all our front-end applications
 type App struct {
 	Server   *http.Server
-	GraphQL  handler.GraphQL
+	Schema   *graphql.Schema
 	Tennis   *tennis.Client
 	Raquette *raquette.Client
 }
@@ -67,7 +68,7 @@ func (app *App) initializeGraphQL() {
 		os.Exit(1)
 	}
 
-	app.GraphQL.Schema = graphql.MustParseSchema(schema.String(), resolver)
+	app.Schema = graphql.MustParseSchema(schema.String(), resolver)
 }
 
 func (app *App) initializeServer() {
@@ -87,10 +88,11 @@ func (app *App) initializeServer() {
 }
 
 func (app *App) initializeRoutes() {
+	graphQLHandler := handler.NewHandler(app.Schema, &relay.Handler{Schema: app.Schema})
 	mux := http.NewServeMux()
 	mux.Handle("/", handler.GraphiQL{})
-	mux.Handle("/graphql", app.GraphQL)
-	mux.Handle("/graphql/", app.GraphQL)
+	mux.Handle("/graphql", graphQLHandler)
+	mux.Handle("/graphql/", graphQLHandler)
 	mux.HandleFunc("/login", app.loginFunc)
 
 	app.Server.Handler = mux
@@ -116,10 +118,10 @@ func (app *App) loginFunc(w http.ResponseWriter, req *http.Request) {
 
 	expires := time.Now().Add(time.Hour * 1).Unix()
 	claims := auth.Claims{
-		user.ID,
-		true,
-		false,
-		jwt.StandardClaims{
+		UserID:    user.ID,
+		IsAdmin:   true,
+		IsReferee: false,
+		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expires,
 			Issuer:    "rapiquette",
 		},

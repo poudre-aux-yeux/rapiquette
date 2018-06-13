@@ -6,7 +6,7 @@ import (
 
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
 
-	graphql "github.com/graph-gophers/graphql-go"
+	graphql "github.com/poudre-aux-yeux/graphql-go"
 )
 
 // MatchResolver : resolves tennis.Match

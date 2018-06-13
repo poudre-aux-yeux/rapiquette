@@ -1,0 +1,9 @@
+type Subscription {
+    helloSaid(): HelloSaidEvent!
+}
+
+# TEST
+type HelloSaidEvent {
+    id: String!
+    msg: String!
+}

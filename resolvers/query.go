@@ -5,7 +5,7 @@ import (
 	"context"
 	"strings"
 
-	graphql "github.com/graph-gophers/graphql-go"
+	graphql "github.com/poudre-aux-yeux/graphql-go"
 )
 
 type queryArgs struct {

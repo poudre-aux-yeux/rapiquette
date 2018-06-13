@@ -29,9 +29,9 @@
   name = "github.com/garyburd/redigo"
   version = "1.5.0"
 
-[[constraint]]
-  branch = "master"
-  name = "github.com/graph-gophers/graphql-go"
+# [[constraint]]
+#   branch = "master"
+#   name = "github.com/poudre-aux-yeux/graphql-go"
 
 [[constraint]]
   name = "github.com/segmentio/ksuid"

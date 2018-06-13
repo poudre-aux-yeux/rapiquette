@@ -1,6 +1,10 @@
 package handler
 
-import "net/http"
+import (
+	"bytes"
+	"fmt"
+	"net/http"
+)
 
 // GraphiQL is an in-browser IDE for exploring GraphiQL APIs.
 // This handler returns GraphiQL when requested.
@@ -17,40 +21,58 @@ func (h GraphiQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(graphiql)
 }
 
+func respond(w http.ResponseWriter, body []byte, code int) {
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.WriteHeader(code)
+	_, _ = w.Write(body)
+}
+
+func errorJSON(msg string) []byte {
+	buf := bytes.Buffer{}
+	fmt.Fprintf(&buf, `{"error": "%s"}`, msg)
+	return buf.Bytes()
+}
+
 var graphiql = []byte(`
-	<!DOCTYPE html>
-	<html>
+<!DOCTYPE html>
+<html>
 	<head>
-	  <style>body {height: 100vh; margin: 0; width: 100%; overflow: hidden;}</style>
-	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.11/graphiql.css" />
-	  <script src="//cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.production.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.production.min.js"></script>
-	  <script src="//cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.11/graphiql.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.10/graphiql.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.1.0/fetch.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.10/graphiql.js"></script>
+		<script src="//unpkg.com/subscriptions-transport-ws@0.8.3/browser/client.js"></script>
+		<script src="//unpkg.com/graphiql-subscriptions-fetcher@0.0.2/browser/client.js"></script>
 	</head>
-	<body>
+	<body style="width: 100%; height: 100%; margin: 0; overflow: hidden;">
 		<div id="graphiql" style="height: 100vh;">Loading...</div>
 		<script>
-			function fetchGQL(params) {
+			function graphQLFetcher(graphQLParams) {
 				return fetch("/graphql", {
 					method: "post",
-					body: JSON.stringify(params),
+					body: JSON.stringify(graphQLParams),
 					credentials: "include",
-				}).then(function (resp) {
-					return resp.text();
-				}).then(function (body) {
+				}).then(function (response) {
+					return response.text();
+				}).then(function (responseBody) {
 					try {
-						return JSON.parse(body);
+						return JSON.parse(responseBody);
 					} catch (error) {
-						return body;
+						return responseBody;
 					}
 				});
 			}
-
+			var subscriptionsClient = new window.SubscriptionsTransportWs.SubscriptionClient('ws://localhost:3333/graphql', { reconnect: true });
+			var subscriptionsFetcher = window.GraphiQLSubscriptionsFetcher.graphQLFetcher(subscriptionsClient, graphQLFetcher);
 			ReactDOM.render(
-				React.createElement(GraphiQL, {fetcher: fetchGQL}),
+				React.createElement(GraphiQL, {fetcher: subscriptionsFetcher}),
 				document.getElementById("graphiql")
-			)
+			);
 		</script>
 	</body>
 </html>

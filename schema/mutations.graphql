@@ -16,6 +16,10 @@ type Mutation {
     updateStadium(stadium: UpdateStadiumInput!): Stadium
     # Update a match (PUT behavior)
     updateMatch(match: UpdateMatchInput!): Match
+
+
+    ## TEST
+    sayHello(msg: String!): HelloSaidEvent!
 }
 
 # Input required to create a new player

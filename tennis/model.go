@@ -2,7 +2,7 @@
 package tennis
 
 import (
-	graphql "github.com/graph-gophers/graphql-go"
+	graphql "github.com/poudre-aux-yeux/graphql-go"
 )
 
 // GetType returns the type of the struct

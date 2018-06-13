@@ -1,7 +1,7 @@
 package resolvers
 
 import (
-	graphql "github.com/graph-gophers/graphql-go"
+	graphql "github.com/poudre-aux-yeux/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/raquette"
 )
 
