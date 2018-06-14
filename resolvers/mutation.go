@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	graphql "github.com/poudre-aux-yeux/graphql-go"
 	"github.com/poudre-aux-yeux/rapiquette/tennis"
@@ -54,6 +55,11 @@ type createStadiumArgs struct {
 }
 type updateStadiumArgs struct {
 	Stadium tennis.Stadium
+}
+
+type scorePointArgs struct {
+	MatchID graphql.ID
+	Team    bool
 }
 
 // CreateMatch : mutation to create a match
@@ -113,6 +119,15 @@ func (r *RootResolver) CreateMatch(ctx context.Context, args *createMatchArgs) (
 	// }
 
 	match, err := r.tennis.CreateMatch(args.Match)
+
+	// Dispatch the event
+	e := &MatchCreatedEvent{match: match}
+	go func() {
+		select {
+		case r.matchCreatedEvents <- e:
+		case <-time.After(1 * time.Second):
+		}
+	}()
 
 	return &MatchResolver{match: match, tennis: r.tennis}, err
 }
@@ -281,6 +296,28 @@ func (r *RootResolver) UpdateStadium(ctx context.Context, args *updateStadiumArg
 	stadium, err := r.tennis.UpdateStadium(args.Stadium)
 
 	return &StadiumResolver{stadium: stadium}, err
+}
+
+// ScorePoint : score a point for a team in a match
+func (r *RootResolver) ScorePoint(args struct{ Point struct{ scorePointArgs } }) (*PointScoredEvent, error) {
+	m, err := r.tennis.GetMatchByID(args.Point.MatchID)
+
+	if err != nil {
+		return nil, fmt.Errorf("couldn't get the match %s: %v", args.Point.MatchID, err)
+	}
+
+	e := &PointScoredEvent{match: m, team: args.Point.Team}
+	go func() {
+		select {
+		case r.pointScoredEvents <- e:
+		case <-time.After(1 * time.Second):
+		}
+	}()
+
+	// TODO: save the event in the message broker
+	// or somewhere else
+
+	return e, nil
 }
 
 func (r *RootResolver) existsInSet(set string, key graphql.ID) error {

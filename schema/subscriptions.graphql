@@ -1,3 +1,4 @@
 type Subscription {
-    pointScored(): PointScoredEvent!
+    pointScored(matchId: ID!): PointScoredEvent!
+    matchCreated(): MatchCreatedEvent!
 }
