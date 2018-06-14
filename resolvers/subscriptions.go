@@ -2,38 +2,47 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"math/rand"
 	"time"
+
+	graphql "github.com/poudre-aux-yeux/graphql-go"
 )
 
-// Hello : test
-func (r *RootResolver) Hello() string {
-	return "Hello world!"
+type scorePointArgs struct {
+	MatchID graphql.ID
+	Team    bool
 }
 
-// SayHello : test
-func (r *RootResolver) SayHello(args struct{ Msg string }) *HelloSaidEvent {
-	e := &HelloSaidEvent{msg: args.Msg, id: randomID()}
+// ScorePoint : score a point for a team in a match
+func (r *RootResolver) ScorePoint(args struct{ Point struct{ scorePointArgs } }) (*PointScoredEvent, error) {
+	m, err := r.tennis.GetMatchByID(args.Point.MatchID)
+
+	if err != nil {
+		return nil, fmt.Errorf("couldn't get the match %s: %v", args.Point.MatchID, err)
+	}
+
+	e := &PointScoredEvent{match: m, team: args.Point.Team, tennis: r.tennis}
 	go func() {
 		select {
-		case r.helloSaidEvents <- e:
+		case r.pointScoredEvents <- e:
 		case <-time.After(1 * time.Second):
 		}
 	}()
-	return e
+	return e, nil
 }
 
-// HelloSaid : test
-func (r *RootResolver) HelloSaid(ctx context.Context) <-chan *HelloSaidEvent {
-	c := make(chan *HelloSaidEvent)
+// PointScored : A new point was scored in a match
+func (r *RootResolver) PointScored(ctx context.Context) <-chan *PointScoredEvent {
+	c := make(chan *PointScoredEvent)
 	// NOTE: this could take a while
-	r.helloSaidSubscriber <- &HelloSaidSubscriber{events: c, stop: ctx.Done()}
+	r.pointScoredSubscriber <- &PointScoredSubscriber{events: c, stop: ctx.Done()}
 
 	return c
 }
 
-func (r *RootResolver) broadcastHelloSaid() {
-	subscribers := map[string]*HelloSaidSubscriber{}
+func (r *RootResolver) broadcastPointScored() {
+	subscribers := map[string]*PointScoredSubscriber{}
 	unsubscribe := make(chan string)
 
 	// NOTE: subscribing and sending events are at odds.
@@ -41,11 +50,11 @@ func (r *RootResolver) broadcastHelloSaid() {
 		select {
 		case id := <-unsubscribe:
 			delete(subscribers, id)
-		case s := <-r.helloSaidSubscriber:
+		case s := <-r.pointScoredSubscriber:
 			subscribers[randomID()] = s
-		case e := <-r.helloSaidEvents:
+		case e := <-r.pointScoredEvents:
 			for id, s := range subscribers {
-				go func(id string, s *HelloSaidSubscriber) {
+				go func(id string, s *PointScoredSubscriber) {
 					select {
 					case <-s.stop:
 						unsubscribe <- id

@@ -286,18 +286,10 @@ Create a match:
 
 ``` graphql
 mutation CreateNewMatch(
-  $date: Time!,
-  $homePlayers: [ID!]!,
-  $awayPlayers: [ID!]!,
-  $referee: ID!,
-  $stadium: ID!
+  $match: CreateMatchInput!
 ) {
   createMatch(
-    date: $date,
-    homePlayers: $homePlayers,
-    awayPlayers: $awayPlayers,
-    referee: $referee,
-    stadium: $stadium
+    match: $match
   ) {
     id
     date
@@ -339,10 +331,54 @@ mutation CreateNewMatch(
 # Query Variables
 
 {
-  "date": "2018-11-10T23:00:00Z",
-  "homePlayers": ["10JEIUJTiophMWzEGqaAb3fvMY3"],
-  "awayPlayers": ["10JEOE9xEjIb5LpQzKIGfgvIsJo"],
-  "referee": "10JG02R4lHisO0T3I5r2FclC10s",
-  "stadium": "10JDckheW3F2AcXNNdkfsOXz4zM"
+  "match": {
+    "date": "2018-11-10T23:00:00Z",
+    "homePlayersLinks": ["10JEIUJTiophMWzEGqaAb3fvMY3"],
+    "awayPlayersLinks": ["10JEOE9xEjIb5LpQzKIGfgvIsJo"],
+    "refLink": "10JG02R4lHisO0T3I5r2FclC10s",
+    "stdLink": "10JDckheW3F2AcXNNdkfsOXz4zM"
+  }
 }
+```
+
+Subscribe to points scored
+
+``` graphql
+subscription {
+  pointScored  {
+    match {
+      id
+      date
+    }
+    team
+  }
+}
+```
+
+Score a point
+
+``` graphql
+mutation ScorePoint(
+  $pt: ScorePointInput!
+) {
+  scorePoint(
+    point: $pt
+  ) {
+    match {
+      id
+    }
+    team
+  }
+}
+
+# Query variables
+
+{
+	"pt": {
+    "matchID": "160COqwzM98vhRshJ4vxt2Y5ELF",
+    "team": true 
+  }
+}
+
+# note: team: true when team A scores, team: false when team B scores
 ```

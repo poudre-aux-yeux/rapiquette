@@ -22,21 +22,21 @@ func NewRoot(tennis *tennis.Client, raquette *raquette.Client) (*RootResolver, e
 		return nil, ErrUnableToResolve
 	}
 	r := &RootResolver{
-		tennis:              tennis,
-		raquette:            raquette,
-		helloSaidEvents:     make(chan *HelloSaidEvent),
-		helloSaidSubscriber: make(chan *HelloSaidSubscriber),
+		tennis:                tennis,
+		raquette:              raquette,
+		pointScoredEvents:     make(chan *PointScoredEvent),
+		pointScoredSubscriber: make(chan *PointScoredSubscriber),
 	}
 
-	go r.broadcastHelloSaid()
+	go r.broadcastPointScored()
 
 	return r, nil
 }
 
 // RootResolver : default resolver
 type RootResolver struct {
-	tennis              *tennis.Client
-	raquette            *raquette.Client
-	helloSaidEvents     chan *HelloSaidEvent
-	helloSaidSubscriber chan *HelloSaidSubscriber
+	tennis                *tennis.Client
+	raquette              *raquette.Client
+	pointScoredEvents     chan *PointScoredEvent
+	pointScoredSubscriber chan *PointScoredSubscriber
 }

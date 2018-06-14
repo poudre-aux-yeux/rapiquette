@@ -1,0 +1,7 @@
+# Dispatched when a point is scored
+type PointScoredEvent {
+    # The match where the point was scored
+    match: Match!
+    # The team that scored the point. True = home, false = away
+    team: Boolean!
+}

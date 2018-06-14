@@ -17,9 +17,8 @@ type Mutation {
     # Update a match (PUT behavior)
     updateMatch(match: UpdateMatchInput!): Match
 
-
-    ## TEST
-    sayHello(msg: String!): HelloSaidEvent!
+    # Score a point in a match
+    scorePoint(point: ScorePointInput!): PointScoredEvent!
 }
 
 # Input required to create a new player
@@ -124,4 +123,11 @@ input UpdateStadiumInput {
     name: String!
     # City where the stadium is located
     city: String!
+}
+
+input ScorePointInput {
+    # ID of the match where the point has been scored
+    matchID: ID!
+    # The team that scored the point. True = home, false = away
+    team: Boolean!
 }
