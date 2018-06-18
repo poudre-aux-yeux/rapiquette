@@ -16,3 +16,6 @@ rapiquette
 
 # Auto generated
 bindata.go
+
+# debug
+ids.txt
