@@ -26,7 +26,12 @@ func NewHandler(s *graphql.Schema, httpHandler http.Handler) http.HandlerFunc {
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
-		w.WriteHeader(200)
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(200)
+			w.Write([]byte("ok"))
+			return
+		}
+
 		httpHandler.ServeHTTP(w, r)
 	}
 }
