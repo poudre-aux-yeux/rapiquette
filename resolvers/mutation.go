@@ -306,6 +306,10 @@ func (r *RootResolver) ScorePoint(args struct{ Point struct{ scorePointArgs } })
 		return nil, fmt.Errorf("couldn't get the match %s: %v", args.Point.MatchID, err)
 	}
 
+	if err = m.Score.ScorePoint(args.Point.Team); err != nil {
+		return nil, err
+	}
+
 	e := &PointScoredEvent{match: m, team: args.Point.Team}
 	go func() {
 		select {
@@ -313,9 +317,6 @@ func (r *RootResolver) ScorePoint(args struct{ Point struct{ scorePointArgs } })
 		case <-time.After(1 * time.Second):
 		}
 	}()
-
-	// TODO: save the event in the message broker
-	// or somewhere else
 
 	return e, nil
 }

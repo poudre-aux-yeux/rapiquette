@@ -82,4 +82,12 @@ type Game {
     awayPoints: Int
 }
 
+type DisplayableScore {
+	home: [Int!]
+	away: [Int!]
+	winner: Boolean!
+	homePoints: String!
+	awayPoints: String!
+}
+
 union SearchResult = Match | Stadium | Player | TennisReferee
