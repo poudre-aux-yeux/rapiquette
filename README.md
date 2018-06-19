@@ -28,7 +28,7 @@ Web application for the referee
 [MatteMaRaquette](https://github.com/poudre-aux-yeux/ATP_LIVE):
 Web application to watch the live scores and results
 
-MonArbitreRaquette: Back-office Web application to administrate accounts, players,
+[MonAdminRaquette](https://github.com/poudre-aux-yeux/mon-admin-raquette): Back-office Web application to administrate accounts, players,
 matches, stadiums ...
 
 # Languages and frameworks
