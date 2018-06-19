@@ -22,13 +22,13 @@ docker pull poudreauxyeux/rapiquette
 
 **Front-ends:**
 
-[MonArbitreRaquette](https://github.com/poudre-aux-yeux/mon-arbitre-raquette):
+[RefeGreen](https://github.com/poudre-aux-yeux/refegreen):
 Web application for the referee
 
 [MatteMaRaquette](https://github.com/poudre-aux-yeux/ATP_LIVE):
 Web application to watch the live scores and results
 
-GereMaRaquette: Back-office Web application to administrate accounts, players,
+MonArbitreRaquette: Back-office Web application to administrate accounts, players,
 matches, stadiums ...
 
 # Languages and frameworks
