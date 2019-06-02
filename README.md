@@ -3,7 +3,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/poudre-aux-yeux/rapiquette)](https://goreportcard.com/report/github.com/poudre-aux-yeux/rapiquette)
 [![GoDoc](https://camo.githubusercontent.com/ac30242392a5470effdd2b008d7be055b6f6f8d6/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f676f646f632d7265666572656e63652d626c75652e7376673f7374796c653d666c61742d737175617265)](https://godoc.org/github.com/poudre-aux-yeux/rapiquette)
 
-raquette + API = rAPIquette
+raquette + API = rAPIquette (Raquette is the French for tennis racket).
 
 Get the Docker image:
 
@@ -22,14 +22,14 @@ docker pull poudreauxyeux/rapiquette
 
 **Front-ends:**
 
-[RefeGreen](https://github.com/poudre-aux-yeux/refegreen):
-Web application for the referee
+[RefeGreen](https://github.com/poudre-aux-yeux/refegreen):  
+Allow referees to live update scores. Used by the referees.
 
-[MatteMaRaquette](https://github.com/poudre-aux-yeux/ATP_LIVE):
-Web application to watch the live scores and results
+[MatteMaRaquette](https://github.com/poudre-aux-yeux/ATP_LIVE):  
+Web application to watch live scores and results. Used by tennis fans.
 
-[MonAdminRaquette](https://github.com/poudre-aux-yeux/mon-admin-raquette): Back-office Web application to administrate accounts, players,
-matches, stadiums ...
+[MonAdminRaquette](https://github.com/poudre-aux-yeux/mon-admin-raquette):  
+Back-office Web application to manage accounts, players, matches, stadiums... Used by the ATP (Association of Tennis Professionals) staff.
 
 # Languages and frameworks
 
@@ -71,7 +71,7 @@ go get -u github.com/magefile/mage
 # Initialize the repo
 mage setup
 
-# Note : Check all available 'mage' commands
+# Note: Check all available 'mage' commands
 mage -l
 ```
 
@@ -110,25 +110,27 @@ run `docker-compose up` and browse `http://localhost:3333`.
 [GraphiQL](https://github.com/graphql/graphiql) is a graphical interactive
 in-browser GraphQL IDE.
 
-[![GraphiQL screenshot](https://raw.githubusercontent.com/graphql/graphiql/master/resources/graphiql.png)](http://graphql.org/swapi-graphql)
-
+![GraphiQL screenshot](https://raw.githubusercontent.com/graphql/graphiql/master/resources/graphiql.png)
 To use it run `docker-compose up` and browse `http://localhost:3333`.
 
 ## Apollo
 
 [Apollo](https://www.apollographql.com) provides GraphQL clients for React,
 Vue.js, Angular, Android, iOS and other frontend platforms.
-It is a good choice to query this API with an Apollo Client.
+It is a good choice to query this API with an Apollo Client, but other solutions exist.
 
 ## Other clients
 
-Check the "official" list at http://graphql.org/code/#graphql-clients
+Check the "official" list at https://graphql.org/code/#graphql-clients
 
 ## Custom client
 
-[GraphQL clients documentation](http://graphql.org/graphql-js/graphql-clients/)
+But what is a GraphQL client and how does it work? Check the [GraphQL clients documentation](https://graphql.org/graphql-js/graphql-clients/).
 
 ## Examples
+
+You can run these queries in GraphiQL or with any GraphQL client. Some of them use [Query Variables](https://graphql.org/learn/queries/#variables).  
+
 
 Create a new player, with the following query:
 
@@ -341,7 +343,7 @@ mutation CreateNewMatch(
 }
 ```
 
-Subscribe to points scored
+Subscribe to points scored:
 
 ``` graphql
 subscription {
@@ -355,7 +357,7 @@ subscription {
 }
 ```
 
-Score a point
+Score a point:
 
 ``` graphql
 mutation ScorePoint(
@@ -374,7 +376,7 @@ mutation ScorePoint(
 # Query variables
 
 {
-	"pt": {
+  "pt": {
     "matchID": "160COqwzM98vhRshJ4vxt2Y5ELF",
     "team": true 
   }
